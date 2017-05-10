@@ -8,8 +8,12 @@
  */
 
 // Booze API Call
+/*
+loops through result from CocktailDB. able to pull specific components from response data
+
+ */
 var globalResult;
-var drinkName = null
+var drinkName = null;
 var instructions = null;
 var drinkImage = null;
 var drinkIngredients = [];
