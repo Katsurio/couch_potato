@@ -120,7 +120,7 @@ function TMDBajax (genre) {
                 success: function (res) {
                     mediaIDVideo = res.results[0]['key'];
                     console.log(mediaIDVideo);
-
+                    onPlayerReady();
                 }
             });
             appendMedia();
@@ -134,14 +134,12 @@ console.log(mediaIDVideo);
 /** @function - Creates DOM elements and attaches the information pulled from The Movie DB
  * @name - appendMedia
  */
-
 function appendMedia () {
 
     var mediaUrl = $('<img>').attr('src', TMDBurl + mediaPoster);
     var mediaDiv = $('<div>').append(mediaTitle, mediaDate, mediaDescr, mediaUrl, mediaGenre);
     $('body').append(mediaDiv);
 }
-
 
 /** @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
  * @name - attachDrinkToDom
@@ -203,12 +201,16 @@ function createModalFormButtons ()
 }
 
 //Google Start
-var userLocation = 'Irvine';
+// var userLocation = $('#locationInput').val();
+var userLocation = null;
 var userLongLat = null;
 var restaurantLoopList = null;
 var restaurantFinalId = null;
 var restaurantResults = [];
 
+/** @function - Initiates a series of AJAX calls to Google Places for the top three restaurant around the user that is currently open and delivers
+ * @name - restaurantAjaxCall
+ */
 function restaurantAjaxCall() {
     var userLongLatUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + userLocation + '&key=' + apiKeys.googlePlace;
     $.ajax({
@@ -252,6 +254,7 @@ function restaurantAjaxCall() {
                             }
                         })
                     }
+                    attachRestaurantsToDom();
                 },
                 error: function() {
                     console.log('Google Fail')
@@ -264,10 +267,72 @@ function restaurantAjaxCall() {
     });
 }
 
+/** @function - Creates DOM elements and attaches the information pulled from Google Places to them
+ * @name - attachRestaurantsToDom
+ */
+function attachRestaurantsToDom() {
+    var restaurantDiv = $('<div>').addClass('container thumbnail').css({'text-align': 'center'});
+
+    for(var i = 0; i < 3; i++) {
+        var restaurantNameH1 = $('<h1>').text(restaurantResults[i].name);
+        var restaurantAddressH3 = $('<h3>').text(restaurantResults[i].address);
+        var restaurantPhoneH3 = $('<h3>').text(restaurantResults[i].phone);
+        var restaurantLinkAnchor = $('<a>').attr('href', restaurantResults[i].link);
+        var restaurantLinkImg = $('<img src="images/googleMaps.png">').css({'height': '10vmin','width': '10vmin'});
+
+        $('body').append(restaurantDiv)
+            .append(restaurantNameH1)
+            .append(restaurantAddressH3)
+            .append(restaurantPhoneH3)
+            .append(restaurantLinkAnchor);
+        $(restaurantLinkAnchor).append(restaurantLinkImg);
+    }
+}
+
+function locationSubmitBtn() {
+    $('#locationSubmitBtn').on('click', function() {
+        userLocation = $('#locationInput').val();
+        restaurantAjaxCall();
+        $('#locationInput').val('');
+    });
+}
+
 function applyClickHandlers()
 {
     $("#myModal").modal('show');
     createModalFormButtons();
+    locationSubmitBtn();
 }
 
 $(document).ready(applyClickHandlers);
+
+
+
+
+var player;
+// Callback for when the YouTube iFrame player is ready
+function onYouTubeIframeAPIReady()
+{
+    player = new YT.Player('yt-player', {
+        // Set Player height and width
+        height: '390',
+        width: '640',
+        // Set the id of the video to be played
+        videoId: 'Pukw8Ovl6Tc',
+        // Setup event handlers
+        events: {
+            // 'onReady': onPlayerReady,
+            'onError': onError
+        }
+    });
+}
+function onError(error)
+{
+    // Update errors on page
+    console.log('ERROR: ' + error);
+}
+function onPlayerReady()
+{
+    // Cue video after player is ready
+    player.cueVideoById(mediaIDVideo);
+}
