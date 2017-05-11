@@ -60,6 +60,11 @@ body {
     align-items: center;
 }
 
+.modal-header > p {
+    text-align: center;
+    font-size: 18px;
+}
+
 .radio {
     display: inline;
 }
@@ -159,6 +164,6 @@ cursor:pointer;
 
 #locationInput {
     display: inline-block;
-    width: 21vw;
+    width: 13vw;
 }
 
