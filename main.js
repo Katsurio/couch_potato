@@ -1,10 +1,6 @@
 /**
  * Created by Katsurio on 5/10/17.
  */
-
-// import {apiKeys} from 'config/apiKeys';
-
-
 /** @function - Function that shuffles the cards' images.
  * @name shuffleCards
  * @param {String} cardBackImg - A strings that contains the path to the cards' back image.
@@ -208,12 +204,42 @@ function createModalFormButtons ()
 }
 
 //Google Start
-// var userLocation = $('#locationInput').val();
 var userLocation = null;
+var emotionKeyword = '';
 var userLongLat = null;
 var restaurantLoopList = null;
 var restaurantFinalId = null;
 var restaurantResults = [];
+
+// switch(emotionInput) {
+//     case 'Happy':
+//         emotionKeyword = 'mexican';
+//         break;
+//     case 'Sad':
+//         emotionKeyword = 'chinese';
+//         break;
+//     case 'Angry':
+//         emotionKeyword = 'thai, indian';
+//         break;
+//     case 'Poop':
+//         emotionKeyword = 'fast food';
+//         break;
+//     case 'Tired':
+//         emotionKeyword = 'pizza';
+//         break;
+//     case 'Unicorny':
+//         emotionKeyword = 'italian';
+//         break;
+//     case 'Goofy':
+//         emotionKeyword = 'desserts';
+//         break;
+//     case 'Scary':
+//         emotionKeyword = 'random';
+//         break;
+//     default:
+//         emotionKeyword = '';
+//         break;
+// }
 
 /** @function - Initiates a series of AJAX calls to Google Places for the top three restaurant around the user that is currently open and delivers
  * @name - restaurantAjaxCall
@@ -228,7 +254,7 @@ function restaurantAjaxCall() {
         success: function(result) {
             console.log('LongLat Success!!!');
             userLongLat = result.results[0].geometry.location.lat + "," + result.results[0].geometry.location.lng;
-            var newGooglePlacesUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLongLat + '&radius=4000&opennow&keyword=restaurant, delivery, takeout&key=' + apiKeys.googlePlace;
+            var newGooglePlacesUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLongLat + '&radius=3000&opennow&keyword=restaurant,' + emotionKeyword + ', delivery, takeout&key=' + apiKeys.googlePlace;
             $.ajax({
                 dataType: 'json',
                 url: newGooglePlacesUrl,
@@ -255,13 +281,13 @@ function restaurantAjaxCall() {
                                 };
                                 restaurantResults.push(restaurantInfo);
                                 console.log('Google PlaceID Success!');
+                                attachRestaurantsToDom();
                             },
                             error: function() {
                                 console.log('Google PlaceID fail')
                             }
                         })
                     }
-                    attachRestaurantsToDom();
                 },
                 error: function() {
                     console.log('Google Fail')
@@ -279,21 +305,18 @@ function restaurantAjaxCall() {
  */
 function attachRestaurantsToDom() {
     var restaurantDiv = $('<div>').addClass('container thumbnail').css({'text-align': 'center'});
+    var restaurantNameH1 = $('<h1>').text(restaurantResults[restaurantResults.length-1].name);
+    var restaurantAddressH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].address);
+    var restaurantPhoneH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].phone);
+    var restaurantLinkAnchor = $('<a>').attr('href', restaurantResults[restaurantResults.length-1].link);
+    var restaurantLinkImg = $('<img src="images/googleMaps.png">').css({'height': '10vmin','width': '10vmin'});
 
-    for(var i = 0; i < 3; i++) {
-        var restaurantNameH1 = $('<h1>').text(restaurantResults[i].name);
-        var restaurantAddressH3 = $('<h3>').text(restaurantResults[i].address);
-        var restaurantPhoneH3 = $('<h3>').text(restaurantResults[i].phone);
-        var restaurantLinkAnchor = $('<a>').attr('href', restaurantResults[i].link);
-        var restaurantLinkImg = $('<img src="images/googleMaps.png">').css({'height': '10vmin','width': '10vmin'});
-
-        $('body').append(restaurantDiv)
-            .append(restaurantNameH1)
-            .append(restaurantAddressH3)
-            .append(restaurantPhoneH3)
-            .append(restaurantLinkAnchor);
-        $(restaurantLinkAnchor).append(restaurantLinkImg);
-    }
+    $('body').append(restaurantDiv)
+        .append(restaurantNameH1)
+        .append(restaurantAddressH3)
+        .append(restaurantPhoneH3)
+        .append(restaurantLinkAnchor);
+    $(restaurantLinkAnchor).append(restaurantLinkImg);
 }
 
 function locationSubmitBtn() {
@@ -301,6 +324,15 @@ function locationSubmitBtn() {
         userLocation = $('#locationInput').val();
         restaurantAjaxCall();
         $('#locationInput').val('');
+    });
+    $('#locationInput').on('keypress', function(e) {
+        var keyPressed = e.charCode;
+        if(keyPressed === 13) {
+            e.preventDefault();
+            userLocation = $('#locationInput').val();
+            restaurantAjaxCall();
+            $('#locationInput').val('');
+        }
     });
 }
 
@@ -316,30 +348,30 @@ $(document).ready(applyClickHandlers);
 
 
 
-var player;
-// Callback for when the YouTube iFrame player is ready
-function onYouTubeIframeAPIReady()
-{
-    player = new YT.Player('yt-player', {
-        // Set Player height and width
-        height: '390',
-        width: '640',
-        // Set the id of the video to be played
-        videoId: 'Pukw8Ovl6Tc',
-        // Setup event handlers
-        events: {
-            // 'onReady': onPlayerReady,
-            'onError': onError
-        }
-    });
-}
-function onError(error)
-{
-    // Update errors on page
-    console.log('ERROR: ' + error);
-}
-function onPlayerReady()
-{
-    // Cue video after player is ready
-    player.cueVideoById(mediaIDVideo);
-}
+// var player;
+// // Callback for when the YouTube iFrame player is ready
+// function onYouTubeIframeAPIReady()
+// {
+//     player = new YT.Player('yt-player', {
+//         // Set Player height and width
+//         height: '390',
+//         width: '640',
+//         // Set the id of the video to be played
+//         videoId: 'Pukw8Ovl6Tc',
+//         // Setup event handlers
+//         events: {
+//             // 'onReady': onPlayerReady,
+//             'onError': onError
+//         }
+//     });
+// }
+// function onError(error)
+// {
+//     // Update errors on page
+//     console.log('ERROR: ' + error);
+// }
+// function onPlayerReady()
+// {
+//     // Cue video after player is ready
+//     player.cueVideoById(mediaIDVideo);
+// }
