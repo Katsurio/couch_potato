@@ -154,11 +154,11 @@ function attachDrinkToDom() {
     $('body').append(randomDrinkDiv);
     $(randomDrinkDiv)
         .append(drinkImageImg)
-            .append(captionDiv)
-                .append(drinkNameH1)
-                    .append(howToMakeH3)
-                        .append(drinkInstructionsH4)
-                            .append(drinkIngredientsH3);
+        .append(captionDiv)
+        .append(drinkNameH1)
+        .append(howToMakeH3)
+        .append(drinkInstructionsH4)
+        .append(drinkIngredientsH3);
 
     for(var i = 0; i < drinkIngredients.length; i++) {
         var newIngredientH4 = $('<h4>');
