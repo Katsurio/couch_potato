@@ -201,8 +201,9 @@ function createModalFormButtons ()
 //Google Start
 var userLocation = 'Irvine';
 var userLongLat = null;
-var restaurantList = null;
-var restaurantFinal = null;
+var restaurantLoopList = null;
+var restaurantFinalId = null;
+var restaurantResults = [];
 
 function restaurantAjaxCall() {
     var userLongLatUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + userLocation + '&key=AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o';
@@ -222,9 +223,9 @@ function restaurantAjaxCall() {
                 type: 'get',
                 success: function(result) {
                     console.log('Google Places Success!!!');
-                    restaurantList = result;
+                    restaurantLoopList = result;
                     for(var i = 0; i < 3; i++) {
-                        var googlePlaceId = restaurantList.results[i].place_id;
+                        var googlePlaceId = restaurantLoopList.results[i].place_id;
                         var newGooglePlaceId = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + googlePlaceId + '&key=AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o';
                         $.ajax({
                             dataType: 'json',
@@ -232,11 +233,15 @@ function restaurantAjaxCall() {
                             api_key: 'AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o',
                             type: 'get',
                             success: function(result) {
-                                restaurantFinal = result;
-                                var restaurantName = restaurantFinal.result.name;
-                                var address = restaurantFinal.result.formatted_address;
-                                var phone = restaurantFinal.result.formatted_phone_number;
-                                console.log('Google PlaceID Success!', restaurantName, address, phone);
+                                restaurantFinalId = result;
+                                var restaurantInfo = {
+                                    name: restaurantFinalId.result.name,
+                                    address: restaurantFinalId.result.formatted_address,
+                                    phone: restaurantFinalId.result.formatted_phone_number,
+                                    link: restaurantFinalId.result.url
+                                };
+                                restaurantResults.push(restaurantInfo);
+                                console.log('Google PlaceID Success!');
                             },
                             error: function() {
                                 console.log('Google PlaceID fail')
