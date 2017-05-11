@@ -1,6 +1,10 @@
 /**
  * Created by Katsurio on 5/10/17.
  */
+
+// import {apiKeys} from 'config/apiKeys';
+
+
 /** @function - Function that shuffles the cards' images.
  * @name shuffleCards
  * @param {String} cardBackImg - A strings that contains the path to the cards' back image.
@@ -22,7 +26,7 @@ var ingredientMeasures = [];
 function drinkAjaxCall() {
     $.ajax({
         dataType: 'json',
-        url: 'http://www.thecocktaildb.com/api/json/v1/1/random.php',
+        url: 'http://www.thecocktaildb.com/api/json/v1/' + apiKeys.cocktailDb + '/random.php',
         type: 'get',
         success: function(result) {
             console.log('CocktailDB AJAX Call Success!!!');
@@ -90,8 +94,8 @@ var mediaGenreKey = [
 function TMDBajax (genre) {
     $.ajax({
         dataType: 'json',
-        url: "https://api.themoviedb.org/3/discover/movie?with_genres=" + genre + "&sort_by=popularity.desc&vote_count.gte=10&primary_release_date.gte=1927-09-15&primary_release_date.lte=2017-2-23&api_key=72c2461a868b47b346d72e43036bfb70",
-        api_key: '72c2461a868b47b346d72e43036bfb70',
+        url: "https://api.themoviedb.org/3/discover/movie?with_genres=" + genre + "&sort_by=popularity.desc&vote_count.gte=10&primary_release_date.gte=1927-09-15&primary_release_date.lte=2017-2-23&api_key=" + apiKeys.TMDB,
+        api_key: apiKeys.TMDB,
         type: 'get',
         success: function(result) {
             mediaRes = result;
@@ -111,7 +115,7 @@ function TMDBajax (genre) {
 
             $.ajax({
                 data: 'json',
-                url: "https://api.themoviedb.org/3/movie/" + mediaID + "/videos?language=en-US&api_key=72c2461a868b47b346d72e43036bfb70",
+                url: "https://api.themoviedb.org/3/movie/" + mediaID + "/videos?language=en-US&api_key=" + apiKeys.TMDB,
                 type: "get",
                 success: function (res) {
                     mediaIDVideo = res.results[0]['key'];
@@ -206,31 +210,31 @@ var restaurantFinalId = null;
 var restaurantResults = [];
 
 function restaurantAjaxCall() {
-    var userLongLatUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + userLocation + '&key=AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o';
+    var userLongLatUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + userLocation + '&key=' + apiKeys.googlePlace;
     $.ajax({
         dataType: 'json',
         url: userLongLatUrl,
-        api_key: 'AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o',
+        api_key: apiKeys.googlePlace,
         type: 'get',
         success: function(result) {
             console.log('LongLat Success!!!');
             userLongLat = result.results[0].geometry.location.lat + "," + result.results[0].geometry.location.lng;
-            var newGooglePlacesUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLongLat + '&radius=4000&opennow&keyword=restaurant, delivery, takeout&key=AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o';
+            var newGooglePlacesUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLongLat + '&radius=4000&opennow&keyword=restaurant, delivery, takeout&key=' + apiKeys.googlePlace;
             $.ajax({
                 dataType: 'json',
                 url: newGooglePlacesUrl,
-                api_key: 'AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o',
+                api_key: apiKeys.googlePlace,
                 type: 'get',
                 success: function(result) {
                     console.log('Google Places Success!!!');
                     restaurantLoopList = result;
                     for(var i = 0; i < 3; i++) {
                         var googlePlaceId = restaurantLoopList.results[i].place_id;
-                        var newGooglePlaceId = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + googlePlaceId + '&key=AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o';
+                        var newGooglePlaceId = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + googlePlaceId + '&key=' + apiKeys.googlePlace;
                         $.ajax({
                             dataType: 'json',
                             url: newGooglePlaceId,
-                            api_key: 'AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o',
+                            api_key: apiKeys.googlePlace,
                             type: 'get',
                             success: function(result) {
                                 restaurantFinalId = result;
