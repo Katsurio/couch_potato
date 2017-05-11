@@ -1,9 +1,18 @@
-html {
-    background: url(pugtato.png) no-repeat center center fixed;
+body {
+    background: url(images/pug_potato2.png);
+    background-repeat:no-repeat;
+    background-size:100% 100%;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
+    height: 100vh;
+    position: relative;
+    /*background-size: cover;*/
+}
+
+@font-face {
+    font-family: happyCamper;
+    src: url(happy-camper-font.ttf);
 }
 
 #google-icon > img {
@@ -14,8 +23,39 @@ html {
     top: 22%;
 }
 
+#pug > img {
+    position: absolute;
+    bottom: 20%;
+    transform: rotate(-6deg);
+}
+
+@media screen and (max-width: 550px) {
+    #pug {
+        width: 40%;
+    }
+}
+
 .navbar {
     margin-bottom: 0;
+}
+
+.navbar-brand {
+    font-family: happyCamper, Helvetica, sans-serif;
+    font-size: 5vw;
+}
+
+#modalContainer > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-title {
+    font-family: happyCamper, Helvetica, sans-serif;
+    font-size: 4.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .radio {

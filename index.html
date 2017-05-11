@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <link type="text/css" rel="stylesheet" href="style.css">
-    <script src = "https://www.youtube.com/iframe_api"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="config/apiKeys.js"></script>
     <script type="text/javascript" src="main.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Po-tah-to</a>
@@ -25,42 +25,75 @@
         <button type="button" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#settingsModal">Get Started</button>
     </div>
 </nav>
-<div id="google-icon">
-    <img src="googleMaps.png">
-</div>
+
 <div class="container">
-    <!-- Modal -->
-    <div class="modal fade" id="settingsModal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Couch Potato</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <h2>Mood</h2>
+    <div id="google-icon">
+        <img src="images/googleMaps.png">
+    </div>
+
+    <div id="pug">
+        <img src="images/pug.png">
+    </div>
+
+    <div id="modalContainer">
+        <div id="myModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Hello & Welcome!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Subscribe to our mailing list to get the latest updates straight in your inbox.</p>
                         <form>
-                            <div class="form-group mood-group-container"></div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Email Address">
+                                <button type="submit" class="btn btn-primary">Subscribe</button>
                         </form>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="container" id="mood-container">
+        <!-- Modal -->
+        <div class="modal fade" id="settingsModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Couch Potato</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <h2>Mood</h2>
+                            <form>
+                                <div class="form-group mood-group-container">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="yt-player-container">
+        <div id="yt-player"></div>
+    </div>
+    <!--TODO: Leave this <iframe> here for now-->
+    <!--<iframe id="ytplayer" type="text/html" width="640" height="360"-->
+            <!--src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"-->
+            <!--frameborder="0">-->
+    <!--</iframe>-->
 </div>
-<div class="yt-player-container">
-    <!-- The iframe video player will replace the <div> tag below this line. -->
-    <div id="yt-player"></div>
-</div>
-<!--TODO: Leave this <iframe> here for now-->
-<!--<iframe id="ytplayer" type="text/html" width="640" height="360"-->
-        <!--src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"-->
-        <!--frameborder="0">-->
-<!--</iframe>-->
 </body>
 </html>
