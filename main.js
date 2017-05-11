@@ -90,12 +90,12 @@ var mediaGenreKey = [
 function TMDBajax (genre) {
     $.ajax({
         dataType: 'json',
-        url: "https://api.themoviedb.org/3/discover/movie?with_genres=" + genre + "&sort_by=popularity.desc&vote_count.gte=10&primary_release_date.gte=1927-09-15&primary_release_date.lte=2017-2-23&api_key=" + apiKeys.TMDB,
+        url: "https://api.themoviedb.org/3/discover/movie?with_genres=" + genre + "&sort_by=popularity.desc&vote_count.gte=50&primary_release_date.gte=1927-09-15&primary_release_date.lte=2017-2-23&api_key=" + apiKeys.TMDB,
         api_key: apiKeys.TMDB,
         type: 'get',
         success: function(result) {
             mediaRes = result;
-            var selectedMedia = Math.floor(Math.random() * 10) + 1;
+            var selectedMedia = Math.floor(Math.random() * 50) + 1;
 
             mediaTitle = mediaRes.results[selectedMedia].title;
             mediaDate = mediaRes.results[selectedMedia].release_date;
@@ -131,7 +131,9 @@ console.log(mediaIDVideo);
  * @name - appendMedia
  */
 function appendMedia () {
-    var mediaPosterDiv = $('<img>').attr('src', TMDBurl + mediaPoster);
+    mediaDate = "(" + (mediaDate.slice(0, 4)) + ")";
+
+    var mediaPosterDiv = $('<img>').attr('src', TMDBurl + mediaPoster).addClass('posterDiv');
     var mediaTitleDiv = $('<div>').addClass('titleDiv').text(mediaTitle);
     var mediaDateDiv = $('<div>').addClass('dateDiv').text(mediaDate);
     var mediaDescrDiv = $('<div>').addClass('descrDiv').text(mediaDescr);

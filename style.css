@@ -161,3 +161,28 @@ cursor:pointer;
     width: 21vw;
 }
 
+.media-container {
+    background-color: white;
+    font-family: Franklin Gothic Book, sans-serif;
+}
+.titleDiv {
+    font-size: 4em;
+    font-weight: bold;
+    display: inline-block;
+}
+.dateDiv {
+    display: inline-block;
+}
+
+.posterDiv{
+    height: 90%;
+    display: inline-block;
+
+}
+.genreDiv {
+    display: inline-block;
+
+}
+.descrDiv {
+    display: inline-block;
+}
