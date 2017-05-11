@@ -6,6 +6,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     height: 100vh;
+    position: relative;
     /*background-size: cover;*/
 }
 
@@ -20,6 +21,18 @@ body {
     transform: rotate(-6deg);
     left: 2%;
     top: 22%;
+}
+
+#pug > img {
+    position: absolute;
+    bottom: 20%;
+    transform: rotate(-6deg);
+}
+
+@media screen and (max-width: 550px) {
+    #pug {
+        width: 40%;
+    }
 }
 
 .navbar {
