@@ -178,22 +178,26 @@ function createModalFormButtons ()
         ["Angry", "images/angryEmoji.png"],
         ["Poo", "images/pooEmoji.png"],
         ["Tired", "images/tiredEmoji.png"],
-        ["Horny", "images/hornyEmoji.png"],
+        ["Unicorny", "images/unicornEmoji.png"],
         ["Goofy", "images/goofyEmoji.png"],
         ["Scared", "images/scaredEmoji.png"]
     ];
     for (i = 0; i < moods.length; i++)
     {
         temp = moods[i];
-        $('.mood-group-container').append(
-            $('<div>').addClass('radio radioDiv ' + temp[0]));
-        $('.radio:last').append(
-            $('<label>'));
-        $('.radio label:last').append(
-            $('<input type="radio" name="radOption">').text(temp[0]),
-            $('<img src=' + temp[1] + '>'));
+        var url = moods[i][1];
+        var input_radio = $("<input type='radio'/>")
+            .attr("value", temp[0])
+            .attr("id", temp[0])
+            .attr("name", "radOption");
+        var img = $("<img>").attr('src', url);
+        var label = $('<label>' + temp[0] + '</label>').attr('for', temp[0]).append(img);
+        $('.mood-group-container').append(input_radio, label);
     }
-    $('.mood-group-container .radio:first-child input').attr('checked', "checked");
+    $('.mood-group-container input:radio').addClass('hidden');
+    $('.mood-group-container label').click(function(){
+        $(this).addClass('selected').siblings().removeClass('selected');
+    });
 }
 
 //Google Start

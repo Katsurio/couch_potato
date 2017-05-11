@@ -34,6 +34,7 @@
             <input type="text" id="locationInput" class="form-control" placeholder="Please Enter Your Address or City">
             <button type="button" id="locationSubmitBtn" class="btn btn-primary form-control">Submit Location</button>
         </form>
+
     </div>
 </nav>
 
@@ -44,6 +45,11 @@
 
     <div id="pug">
         <img src="images/pug.png">
+    </div>
+    <div class='popup'>
+        <p class="bubble">Hi there! I'm the Couch Pugtato! Let's kick back and relax.<br>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#settingsModal">Get Started</button>
+        </p>
     </div>
 
     <div id="modalContainer">
@@ -62,7 +68,9 @@
                             </div>
                             <div class="form-group">
                                 <input type="email" class="form-control" placeholder="Email Address">
+
                                 <button type="submit" class="btn btn-primary">Subscribe</button>
+
                             </div>
                         </form>
                     </div>
@@ -70,7 +78,6 @@
             </div>
         </div>
     </div>
-
     <div class="container" id="mood-container">
         <!-- Modal -->
         <div class="modal fade" id="settingsModal" role="dialog">
