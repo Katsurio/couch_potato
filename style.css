@@ -25,6 +25,7 @@ body {
     bottom: 20%;
     transform: rotate(-6deg);
     animation-name: jello;
+    animation-duration: 10s;
     transform-origin: center;
 
     transition:all 1s;
