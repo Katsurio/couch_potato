@@ -23,7 +23,7 @@ body {
     top: 22%;
 }
 
-#pug > img {
+#pug > img {g
     position: absolute;
     bottom: 20%;
     transform: rotate(-6deg);
