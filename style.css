@@ -22,9 +22,15 @@ html {
     display: inline;
 }
 
-.invisible {
-    visibility: hidden;
+.hidden {
+    position: absolute;
+    left: -9999px;
 }
+
+.selected {
+    background-color: dodgerblue;
+}
+
 .mood-group-container label {
     display: inline-block;
     cursor: pointer;

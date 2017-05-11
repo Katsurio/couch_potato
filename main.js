@@ -187,15 +187,17 @@ function createModalFormButtons ()
     for (i = 0; i < moods.length; i++)
     {
         temp = moods[i];
-        $('.mood-group-container').append(
-            $('<div>').addClass('radio radioDiv ' + temp[0]));
-        $('.radio:last').append(
-            $('<label>'));
-        $('.radio label:last').append(
-            $('<input type="radio" name="radOption">').text(temp[0]),
-            $('<img src=' + temp[1] + '>'));
+        var input_radio = $("<input type='radio' 'value=' + temp[0] +  />")
+            .attr("id", temp[0])
+            .attr("name", "radOption");
+        var label = $('<label>').attr('for', temp[0]).append('<img src=' + temp[1] + ' alt=' + temp[0] + '>');
+        $('.mood-group-container').append(input_radio, label);
+
     }
-    $('.mood-group-container .radio:first-child input').attr('checked', "checked");
+    $('.mood-group-container input:radio').addClass('hidden');
+    $('.mood-group-container label').click(function(){
+        $(this).addClass('selected').siblings().removeClass('selected');
+    });
 }
 
 //Google Start
