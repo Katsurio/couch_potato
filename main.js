@@ -116,7 +116,7 @@ function TMDBajax (genre) {
                 success: function (res) {
                     mediaIDVideo = res.results[0]['key'];
                     console.log(mediaIDVideo);
-
+                    onPlayerReady();
                 }
             });
             appendMedia();
@@ -130,14 +130,12 @@ console.log(mediaIDVideo);
 /** @function - Creates DOM elements and attaches the information pulled from The Movie DB
  * @name - appendMedia
  */
-
 function appendMedia () {
 
     var mediaUrl = $('<img>').attr('src', TMDBurl + mediaPoster);
     var mediaDiv = $('<div>').append(mediaTitle, mediaDate, mediaDescr, mediaUrl, mediaGenre);
     $('body').append(mediaDiv);
 }
-
 
 /** @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
  * @name - attachDrinkToDom
@@ -261,3 +259,34 @@ function applyClickHandlers()
 }
 
 $(document).ready(applyClickHandlers);
+
+
+
+
+var player;
+// Callback for when the YouTube iFrame player is ready
+function onYouTubeIframeAPIReady()
+{
+    player = new YT.Player('yt-player', {
+        // Set Player height and width
+        height: '390',
+        width: '640',
+        // Set the id of the video to be played
+        videoId: mediaIDVideo,
+        // Setup event handlers
+        events: {
+            // 'onReady': onPlayerReady,
+            'onError': onError
+        }
+    });
+}
+function onError(error)
+{
+    // Update errors on page
+    console.log('"ERROR: " + "<br>" + error');
+}
+function onPlayerReady()
+{
+    // Cue video after player is ready
+    player.cueVideoById(mediaIDVideo);
+}
