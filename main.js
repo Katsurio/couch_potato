@@ -171,7 +171,13 @@ function attachDrinkToDom() {
 
 function createModalFormButtons ()
 {
-    var i, temp;
+    var i,
+        temp,
+        url,
+        input_radio,
+        img,
+        label,
+        text;
     var moods = [
         ["Happy", "images/happyEmoji.png"],
         ["Sad", "images/sadEmoji.png"],
@@ -185,13 +191,14 @@ function createModalFormButtons ()
     for (i = 0; i < moods.length; i++)
     {
         temp = moods[i];
-        var url = moods[i][1];
-        var input_radio = $("<input type='radio'/>")
+        url = moods[i][1];
+        input_radio = $("<input type='radio'/>")
             .attr("value", temp[0])
             .attr("id", temp[0])
             .attr("name", "radOption");
-        var img = $("<img>").attr('src', url);
-        var label = $('<label>' + temp[0] + '</label>').attr('for', temp[0]).append(img);
+        img = $("<img>").attr('src', url);
+        text = $('<span>').text(temp[0]);
+        label = $('<label>').attr('for', temp[0]).append(img, '<br>', text);
         $('.mood-group-container').append(input_radio, label);
     }
     $('.mood-group-container input:radio').addClass('hidden');
