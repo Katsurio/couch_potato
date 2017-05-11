@@ -1,0 +1,23 @@
+html {
+    background: url(pugtato.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#google-icon > img {
+    position: absolute;
+    height: 10vw;
+    transform: rotate(-6deg);
+    left: 2%;
+    top: 22%;
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+.radio {
+    display: inline;
+}
