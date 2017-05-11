@@ -208,35 +208,37 @@ var restaurantLoopList = null;
 var restaurantFinalId = null;
 var restaurantResults = [];
 
-// switch(emotionInput) {
-//     case 'Happy':
-//         emotionKeyword = 'mexican';
-//         break;
-//     case 'Sad':
-//         emotionKeyword = 'chinese';
-//         break;
-//     case 'Angry':
-//         emotionKeyword = 'thai, indian';
-//         break;
-//     case 'Poop':
-//         emotionKeyword = 'fast food';
-//         break;
-//     case 'Tired':
-//         emotionKeyword = 'pizza';
-//         break;
-//     case 'Unicorny':
-//         emotionKeyword = 'italian';
-//         break;
-//     case 'Goofy':
-//         emotionKeyword = 'desserts';
-//         break;
-//     case 'Scary':
-//         emotionKeyword = 'random';
-//         break;
-//     default:
-//         emotionKeyword = '';
-//         break;
-// }
+function foodTypePicker() {
+    switch($('input[name=radOption]:checked').val()) {
+        case 'Happy':
+            emotionKeyword = 'mexican';
+            break;
+        case 'Sad':
+            emotionKeyword = 'chinese';
+            break;
+        case 'Angry':
+            emotionKeyword = 'thai, indian';
+            break;
+        case 'Poo':
+            emotionKeyword = 'fast food';
+            break;
+        case 'Tired':
+            emotionKeyword = 'pizza';
+            break;
+        case 'Unicorny':
+            emotionKeyword = 'italian';
+            break;
+        case 'Goofy':
+            emotionKeyword = 'desserts';
+            break;
+        case 'Scared':
+            emotionKeyword = 'random';
+            break;
+        default:
+            emotionKeyword = '';
+            break;
+    }
+}
 
 /** @function - Initiates a series of AJAX calls to Google Places for the top three restaurant around the user that is currently open and delivers
  * @name - restaurantAjaxCall
@@ -250,6 +252,7 @@ function restaurantAjaxCall() {
         type: 'get',
         success: function(result) {
             console.log('LongLat Success!!!');
+            foodTypePicker();
             userLongLat = result.results[0].geometry.location.lat + "," + result.results[0].geometry.location.lng;
             var newGooglePlacesUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLongLat + '&radius=3000&opennow&keyword=restaurant,' + emotionKeyword + ', delivery, takeout&key=' + apiKeys.googlePlace;
             $.ajax({
