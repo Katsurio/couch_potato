@@ -135,10 +135,13 @@ console.log(mediaIDVideo);
  * @name - appendMedia
  */
 function appendMedia () {
-
-    var mediaUrl = $('<img>').attr('src', TMDBurl + mediaPoster);
-    var mediaDiv = $('<div>').append(mediaTitle, mediaDate, mediaDescr, mediaUrl, mediaGenre);
-    $('body').append(mediaDiv);
+    var mediaPosterDiv = $('<img>').attr('src', TMDBurl + mediaPoster);
+    var mediaTitleDiv = $('<div>').addClass('titleDiv').text(mediaTitle);
+    var mediaDateDiv = $('<div>').addClass('dateDiv').text(mediaDate);
+    var mediaDescrDiv = $('<div>').addClass('descrDiv').text(mediaDescr);
+    var mediaGenreDiv = $('<div>').addClass('genreDiv').text(mediaGenre);
+    var mediaDiv = $('<div>').append(mediaTitleDiv, mediaDateDiv,  mediaGenreDiv, mediaDescrDiv, mediaPosterDiv);
+    $('.media-container').append(mediaDiv);
 }
 
 /** @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
