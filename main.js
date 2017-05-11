@@ -201,12 +201,16 @@ function createModalFormButtons ()
 }
 
 //Google Start
-var userLocation = 'Irvine';
+// var userLocation = $('#locationInput').val();
+var userLocation = null;
 var userLongLat = null;
 var restaurantLoopList = null;
 var restaurantFinalId = null;
 var restaurantResults = [];
 
+/** @function - Initiates a series of AJAX calls to Google Places for the top three restaurant around the user that is currently open and delivers
+ * @name - restaurantAjaxCall
+ */
 function restaurantAjaxCall() {
     var userLongLatUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + userLocation + '&key=' + apiKeys.googlePlace;
     $.ajax({
@@ -250,6 +254,7 @@ function restaurantAjaxCall() {
                             }
                         })
                     }
+                    attachRestaurantsToDom();
                 },
                 error: function() {
                     console.log('Google Fail')
@@ -262,10 +267,41 @@ function restaurantAjaxCall() {
     });
 }
 
+/** @function - Creates DOM elements and attaches the information pulled from Google Places to them
+ * @name - attachRestaurantsToDom
+ */
+function attachRestaurantsToDom() {
+    var restaurantDiv = $('<div>').addClass('container thumbnail').css({'text-align': 'center'});
+
+    for(var i = 0; i < 3; i++) {
+        var restaurantNameH1 = $('<h1>').text(restaurantResults[i].name);
+        var restaurantAddressH3 = $('<h3>').text(restaurantResults[i].address);
+        var restaurantPhoneH3 = $('<h3>').text(restaurantResults[i].phone);
+        var restaurantLinkAnchor = $('<a>').attr('href', restaurantResults[i].link);
+        var restaurantLinkImg = $('<img src="images/googleMaps.png">').css({'height': '10vmin','width': '10vmin'});
+
+        $('body').append(restaurantDiv)
+            .append(restaurantNameH1)
+            .append(restaurantAddressH3)
+            .append(restaurantPhoneH3)
+            .append(restaurantLinkAnchor);
+        $(restaurantLinkAnchor).append(restaurantLinkImg);
+    }
+}
+
+function locationSubmitBtn() {
+    $('#locationSubmitBtn').on('click', function() {
+        userLocation = $('#locationInput').val();
+        restaurantAjaxCall();
+        $('#locationInput').val('');
+    });
+}
+
 function applyClickHandlers()
 {
     $("#myModal").modal('show');
     createModalFormButtons();
+    locationSubmitBtn();
 }
 
 $(document).ready(applyClickHandlers);

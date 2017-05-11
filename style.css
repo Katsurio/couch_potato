@@ -61,3 +61,8 @@ body {
 .radio {
     display: inline;
 }
+
+#locationInput {
+    display: inline-block;
+    width: 21vw;
+}
