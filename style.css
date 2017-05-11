@@ -6,6 +6,14 @@ html {
     background-size: cover;
 }
 
+#google-icon > img {
+    position: absolute;
+    height: 10vw;
+    transform: rotate(-6deg);
+    left: 2%;
+    top: 22%;
+}
+
 .navbar {
     margin-bottom: 0;
 }
