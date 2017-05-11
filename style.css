@@ -21,3 +21,15 @@ html {
 .radio {
     display: inline;
 }
+
+.invisible {
+    visibility: hidden;
+}
+.mood-group-container label {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.mood-group-container label img {
+    padding: 3px;
+}
