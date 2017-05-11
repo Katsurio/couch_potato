@@ -162,3 +162,6 @@ cursor:pointer;
     width: 13vw;
 }
 
+#foodModal {
+    font-family: happyCamper, Helvetica, sans-serif;
+}
