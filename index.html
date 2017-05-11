@@ -11,7 +11,7 @@
     <script type="text/javascript" src="main.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Po-tah-to</a>
@@ -24,9 +24,36 @@
         <button type="button" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#settingsModal">Get Started</button>
     </div>
 </nav>
+
 <div id="google-icon">
     <img src="googleMaps.png">
 </div>
+
+<div id="modalContainer">
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Subscribe our Newsletter</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Subscribe to our mailing list to get the latest updates straight in your inbox.</p>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email Address">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="container">
     <!-- Modal -->

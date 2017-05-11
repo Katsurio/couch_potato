@@ -9,9 +9,13 @@ body {
     /*background-size: cover;*/
 }
 
+@font-face {
+    font-family: happyCamper;
+    src: url(happy-camper-font.ttf);
+}
 
 #google-icon > img {
-    position: fixed;
+    position: absolute;
     height: 10vw;
     transform: rotate(-6deg);
     left: 2%;
@@ -20,6 +24,25 @@ body {
 
 .navbar {
     margin-bottom: 0;
+}
+
+.navbar-brand {
+    font-family: happyCamper, Helvetica, sans-serif;
+    font-size: 5vw;
+}
+
+#modalContainer > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-title {
+    font-family: happyCamper, Helvetica, sans-serif;
+    font-size: 3vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .radio {

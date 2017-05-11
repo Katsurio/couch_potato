@@ -200,6 +200,7 @@ function createModalFormButtons ()
 
 function applyClickHandlers()
 {
+    $("#myModal").modal('show');
     createModalFormButtons();
 }
 
