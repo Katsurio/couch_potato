@@ -266,6 +266,7 @@ function restaurantAjaxCall() {
 
 function applyClickHandlers()
 {
+    $("#myModal").modal('show');
     createModalFormButtons();
 }
 
