@@ -22,7 +22,6 @@
             <!--<li><a href="#">Link</a></li>-->
             <!--<li><a href="#">Link</a></li>-->
         </ul>
-        <button type="button" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#settingsModal">Get Started</button>
     </div>
 </nav>
 
@@ -33,6 +32,11 @@
 
     <div id="pug">
         <img src="images/pug.png">
+    </div>
+    <div class='popup'>
+        <p class="bubble">Hi there! I'm the Couch Pugtato! Let's kick back and relax.<br>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#settingsModal">Get Started</button>
+        </p>
     </div>
 
     <div id="modalContainer">
@@ -52,13 +56,13 @@
                             <div class="form-group">
                                 <input type="email" class="form-control" placeholder="Email Address">
                             <button type="submit" class="btn btn-primary">Subscribe</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="container" id="mood-container">
         <!-- Modal -->
         <div class="modal fade" id="settingsModal" role="dialog">
@@ -73,22 +77,14 @@
                     <div class="modal-body">
                         <div class="container">
                             <h2>Mood</h2>
-
-
-                            <span class='pugtato'> Hover Me </span>
-                            <div class='popup'>
-                                <form>
-                                    <div class="form-group mood-group-container">
-                                        <!--<div class="radio">-->
-                                        <!--<label><input type="radio" name="optradio">-->
-                                        <!--<img src="images/happyEmoji.png"></label>-->
-                                        <!--</div>-->
-                                    </div>
-                                </form>
-                            </div>
-
-
-
+                            <form>
+                                <div class="form-group mood-group-container">
+                                    <!--<div class="radio">-->
+                                    <!--<label><input type="radio" name="optradio">-->
+                                    <!--<img src="images/happyEmoji.png"></label>-->
+                                    <!--</div>-->
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="modal-footer">
