@@ -62,7 +62,8 @@ var mediaDate = null;
 var mediaPoster = null;
 var mediaGenres = null;
 var mediaDescr = null;
-var mediaActors = [];
+var mediaIDVideo = null;
+var mediaID = null;
 var TMDBurl = "http://image.tmdb.org/t/p/w185/";
 var mediaGenreKey = [
     {"id": 28, "name": "Action"},
@@ -89,16 +90,18 @@ var mediaGenreKey = [
 function TMDBajax (genre) {
     $.ajax({
         dataType: 'json',
-        url: "https://api.themoviedb.org/3/discover/movie?with_genres=" + genre + "&sort_by=vote_average.desc&vote_count.gte=10&api_key=72c2461a868b47b346d72e43036bfb70",
+        url: "https://api.themoviedb.org/3/discover/movie?with_genres=" + genre + "&sort_by=popularity.desc&vote_count.gte=10&primary_release_date.gte=1927-09-15&primary_release_date.lte=2017-2-23&api_key=72c2461a868b47b346d72e43036bfb70",
         api_key: '72c2461a868b47b346d72e43036bfb70',
         type: 'get',
         success: function(result) {
-            console.log("In AJAX:", result);
             mediaRes = result;
-            mediaTitle = mediaRes.results[0].title;
-            mediaDate = mediaRes.results[0].release_date;
-            mediaDescr = mediaRes.results[0].overview;
-            mediaPoster = mediaRes.results[0].poster_path;
+            var selectedMedia = Math.floor(Math.random() * 10) + 1;
+
+            mediaTitle = mediaRes.results[selectedMedia].title;
+            mediaDate = mediaRes.results[selectedMedia].release_date;
+            mediaDescr = mediaRes.results[selectedMedia].overview;
+            mediaPoster = mediaRes.results[selectedMedia].poster_path;
+            mediaID = mediaRes.results[selectedMedia].id;
 
             for(var i = 0; i < mediaGenreKey.length; i++){
                 if(mediaGenreKey[i]['id'] === genre){
@@ -106,17 +109,30 @@ function TMDBajax (genre) {
                 }
             }
 
+            $.ajax({
+                data: 'json',
+                url: "https://api.themoviedb.org/3/movie/" + mediaID + "/videos?language=en-US&api_key=72c2461a868b47b346d72e43036bfb70",
+                type: "get",
+                success: function (res) {
+                    mediaIDVideo = res.results[0]['key'];
+                    console.log(mediaIDVideo);
+
+                }
+            });
             appendMedia();
         }
 
     });
 
 }
+console.log(mediaIDVideo);
+
 /** @function - Creates DOM elements and attaches the information pulled from The Movie DB
  * @name - appendMedia
  */
 
 function appendMedia () {
+
     var mediaUrl = $('<img>').attr('src', TMDBurl + mediaPoster);
     var mediaDiv = $('<div>').append(mediaTitle, mediaDate, mediaDescr, mediaUrl, mediaGenre);
     $('body').append(mediaDiv);
