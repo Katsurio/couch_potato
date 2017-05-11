@@ -18,7 +18,6 @@ var ingredientMeasures = [];
 /**
  * @function - Initiates an AJAX call to CocktailDB for a random drink
  * @name - drinkAjaxCall
- * @param - none
  */
 function drinkAjaxCall() {
     $.ajax({
@@ -48,10 +47,9 @@ function drinkAjaxCall() {
     });
 }
 
-/**
- * @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
+
+/** @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
  * @name - attachDrinkToDom
- * @params - none
  */
 function attachDrinkToDom() {
     var randomDrinkDiv = $('<div>').addClass('container thumbnail').css({'text-align': 'center'});
@@ -82,6 +80,38 @@ function attachDrinkToDom() {
     }
 }
 
-$(document).ready(function(){
-    drinkAjaxCall();
-});
+function createModalFormButtons ()
+{
+    var i, temp;
+    var moods = [
+        ["Happy", "images/happyEmoji.png"],
+        ["Sad", "images/sadEmoji.png"],
+        ["Angry", "images/angryEmoji.png"],
+        ["Poo", "images/pooEmoji.png"],
+        ["Tired", "images/tiredEmoji.png"],
+        ["Horny", "images/hornyEmoji.png"],
+        ["Goofy", "images/goofyEmoji.png"],
+        ["Scared", "images/scaredEmoji.png"]
+    ];
+    for (i = 0; i < moods.length; i++)
+    {
+        temp = moods[i];
+        $('.mood-group-container').append(
+            $('<div>').addClass('radio radioDiv' + temp[0]));
+        $('.radio:last').append(
+            $('<label>'));
+        $('.radio label:last').append(
+            $('<input type="radio" name=' + temp[0] + '>').text(temp[0]),
+            $('<img src=' + temp[1] + '>')
+        );
+    }
+
+}
+
+function applyClickHandlers()
+{
+    createModalFormButtons();
+}
+
+$(document).ready(applyClickHandlers);
+
