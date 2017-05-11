@@ -198,10 +198,66 @@ function createModalFormButtons ()
     $('.mood-group-container .radio:first-child input').attr('checked', "checked");
 }
 
+//Google Start
+var userLocation = 'Irvine';
+var userLongLat = null;
+var restaurantList = null;
+var restaurantFinal = null;
+
+function restaurantAjaxCall() {
+    var userLongLatUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + userLocation + '&key=AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o';
+    $.ajax({
+        dataType: 'json',
+        url: userLongLatUrl,
+        api_key: 'AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o',
+        type: 'get',
+        success: function(result) {
+            console.log('LongLat Success!!!');
+            userLongLat = result.results[0].geometry.location.lat + "," + result.results[0].geometry.location.lng;
+            var newGooglePlacesUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLongLat + '&radius=4000&opennow&keyword=restaurant, delivery, takeout&key=AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o';
+            $.ajax({
+                dataType: 'json',
+                url: newGooglePlacesUrl,
+                api_key: 'AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o',
+                type: 'get',
+                success: function(result) {
+                    console.log('Google Places Success!!!');
+                    restaurantList = result;
+                    for(var i = 0; i < 3; i++) {
+                        var googlePlaceId = restaurantList.results[i].place_id;
+                        var newGooglePlaceId = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + googlePlaceId + '&key=AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o';
+                        $.ajax({
+                            dataType: 'json',
+                            url: newGooglePlaceId,
+                            api_key: 'AIzaSyDkUx6pb0iEBwEsLRBmOGR0dpzpZavHl1o',
+                            type: 'get',
+                            success: function(result) {
+                                restaurantFinal = result;
+                                var restaurantName = restaurantFinal.result.name;
+                                var address = restaurantFinal.result.formatted_address;
+                                var phone = restaurantFinal.result.formatted_phone_number;
+                                console.log('Google PlaceID Success!', restaurantName, address, phone);
+                            },
+                            error: function() {
+                                console.log('Google PlaceID fail')
+                            }
+                        })
+                    }
+                },
+                error: function() {
+                    console.log('Google Fail')
+                }
+            });
+        },
+        error: function() {
+            console.log('LongLat Fail!!!');
+        }
+    });
+}
+
 function applyClickHandlers()
 {
     createModalFormButtons();
 }
 
 $(document).ready(applyClickHandlers);
-
