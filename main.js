@@ -172,15 +172,14 @@ function createModalFormButtons ()
     {
         temp = moods[i];
         $('.mood-group-container').append(
-            $('<div>').addClass('radio radioDiv' + temp[0]));
+            $('<div>').addClass('radio radioDiv ' + temp[0]));
         $('.radio:last').append(
             $('<label>'));
         $('.radio label:last').append(
-            $('<input type="radio" name=' + temp[0] + '>').text(temp[0]),
-            $('<img src=' + temp[1] + '>')
-        );
+            $('<input type="radio" name="radOption">').text(temp[0]),
+            $('<img src=' + temp[1] + '>'));
     }
-
+    $('.mood-group-container .radio:first-child input').attr('checked', "checked");
 }
 
 function applyClickHandlers()
