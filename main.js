@@ -45,3 +45,80 @@ function ajaxCall() {
         }
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function createModalFormButtons ()
+{
+    var i, k, temp;
+    var moods = [
+        ["Happy", "images/happyEmoji.png"],
+        ["Sad", "images/sadEmoji.png"],
+        ["Angry", "images/angryEmoji.png"],
+        ["Poo", "images/pooEmoji.png"],
+        ["Tired", "images/tiredEmoji.png"],
+        ["Horny", "images/hornyEmoji.png"],
+        ["Goofy", "images/goofyEmoji.png"],
+        ["Scared", "images/scaredEmoji.png"]
+    ];
+    for (i = 0; i < moods.length; i++)
+    {
+        temp = moods[i];
+        $('.mood-group-container').append(
+            $('<div>').addClass('radio radioDiv' + temp[0]));
+        $('.radio:last').append(
+            $('<label>'));
+        $('.radio label:last').append(
+            $('<input type="radio" name=' + temp[0] + '>').text(temp[0]),
+            $('<img src=' + temp[1] + '>')
+        );
+    }
+
+}
+
+function applyClickHandlers()
+{
+    createModalFormButtons();
+}
+
+$(document).ready(applyClickHandlers);
