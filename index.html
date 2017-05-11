@@ -29,12 +29,6 @@
             <!--<li><a href="#">Link</a></li>-->
         </ul>
         <button type="button" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#settingsModal">Let's Get Started</button>
-
-        <form class="form-group navbar-form navbar-right">
-            <input type="text" id="locationInput" class="form-control" placeholder="Please Enter Your Address or City">
-            <button type="button" id="locationSubmitBtn" class="btn btn-primary form-control">Submit Location</button>
-        </form>
-
     </div>
 </nav>
 
@@ -85,6 +79,34 @@
                             <form>
                                 <div class="form-group mood-group-container">
                                 </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="food-container">
+        <!-- Modal -->
+        <div class="modal fade" id="foodModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Food Finder</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container" id="foodModalInfoDiv">
+                            <h2>Please Enter Your Location</h2>
+                            <form class="form-group">
+                                <input type="text" id="locationInput" class="form-control" placeholder="Please Enter Your Address or City">
+                                <button type="button" id="locationSubmitBtn" class="btn btn-primary">Submit Location</button>
                             </form>
                         </div>
                     </div>
