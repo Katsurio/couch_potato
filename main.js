@@ -343,6 +343,11 @@ function locationSubmitBtn() {
     });
 }
 
+function resetApp() {
+    $("")
+    window.location.reload();
+}
+
 function applyClickHandlers()
 {
     $("#myModal").modal('show');
