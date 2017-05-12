@@ -44,6 +44,22 @@ body {
 .navbar-brand {
     font-family: happyCamper, Helvetica, sans-serif;
     font-size: 5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.navbar-nav {
+    display: inline-block;
+    float: none;
+}
+.navbar-collapse {
+    text-align: center;
+}
+
+.navbar-btn {
+    width: 100%;
 }
 
 #modalContainer > div {

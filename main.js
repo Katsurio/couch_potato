@@ -345,8 +345,9 @@ function locationSubmitBtn() {
 }
 
 function resetApp() {
-    $("")
-    window.location.reload();
+    $("#reset").click(function(){
+        window.location.reload();
+    });
 }
 
 function applyClickHandlers()
@@ -357,6 +358,7 @@ function applyClickHandlers()
     $('#google-icon').on('click', function() {
        $('#foodModal').modal('show');
     });
+    resetApp();
 }
 
 $(document).ready(applyClickHandlers);
