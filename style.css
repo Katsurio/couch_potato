@@ -141,9 +141,7 @@ cursor:pointer;
 }
 #pug {
     animation-name: tada;
-
 }
-
 
 #locationInput {
     display: inline-block;
@@ -189,3 +187,9 @@ cursor:pointer;
 .hidden_vid{
     display: none;
 }
+
+#mediaContainer{
+    width: 80%;
+}
+
+

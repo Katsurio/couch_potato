@@ -178,6 +178,8 @@ function TMDBajax () {
  * @function - Creates DOM elements and attaches the information pulled from The Movie DB
  * @name - appendMedia
  */
+
+var mediaDivArr = [];
 function appendMedia () {
     mediaDate = "(" + (mediaDate.slice(0, 4)) + ")";
     var mediaPosterDiv = $('<img>').attr('src', TMDBurl + mediaPoster).addClass('posterDiv'),
@@ -185,8 +187,9 @@ function appendMedia () {
         mediaDateDiv = $('<div>').addClass('dateDiv').text(mediaDate),
         mediaDescrDiv = $('<div>').addClass('descrDiv').text(mediaDescr),
         mediaGenreDiv = $('<div>').addClass('genreDiv').text(mediaGenre),
-        trailerBtn = $('<button type="button" class="btn btn-primary trailerBtn"><span class="glyphicon glyphicon-play"></span>  Play Trailer</button>'),
-        mediaDiv = $('<div>').append(mediaTitleDiv, mediaDateDiv, mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
+        trailerBtn = $('<button type="button" class="btn btn-primary trailerBtn"><span class="glyphicon glyphicon-play"></span>  Play Trailer</button>');
+        mediaDivArr.push(mediaTitleDiv, mediaDateDiv, mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
+        mediaDiv = $('<div>').append(mediaDivArr);
     $('.mediaModalBody').append(mediaDiv);
     $('.trailerBtn').click(showAndPlayYtVid);
 
@@ -510,6 +513,9 @@ function applyClickHandlers()
     $('#pug').on('click', popupClickHandler);
     $('#google-icon').on('click', function() {
         $('#foodModal').modal('show');
+    });
+    $('.mediaContainer').on('hidden.bs.modal', function () {
+        $('.mediaModalBody').empty();
     });
     // $('#google-icon').on('click', function() {
     //     $('#drinkModal').modal('show');
