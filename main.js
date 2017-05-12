@@ -505,6 +505,7 @@ function applyClickHandlers()
     });
     $('#mood-container').on('hidden.bs.modal', function () {
         $("label").removeClass('selected');
+        $("#pug").addClass('tada');
     });
 
     resetApp();
