@@ -529,10 +529,9 @@ function applyClickHandlers()
         $('#foodModal').modal('show');
     });
     resetApp();
-
-    // $('#google-icon').on('click', function() {
-    //     $('#drinkModal').modal('show');
-    // });
+    $('#dratini-glass').on('click', function() {
+        $('#drinkModal').modal('show');
+    });
     drinkAjaxCall();
 }
 
