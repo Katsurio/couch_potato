@@ -189,7 +189,8 @@ function appendMedia () {
         mediaDescrDiv = $('<div>').addClass('descrDiv').text(mediaDescr),
         mediaGenreDiv = $('<div>').addClass('genreDiv').text(mediaGenre),
         trailerBtn = $('<button type="button" class="btn btn-primary trailerBtn"><span class="glyphicon glyphicon-play"></span>  Play Trailer</button>');
-        mediaDivArr.push(mediaTitleDiv, mediaDateDiv, mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
+        $(mediaDescrDiv).append(trailerBtn);
+        mediaDivArr.push(mediaTitleDiv, mediaDateDiv, mediaGenreDiv, mediaPosterDiv, mediaDescrDiv);
         mediaDiv = $('<div>').append(mediaDivArr);
     $('.mediaModalBody').append(mediaDiv);
     $('.trailerBtn').click(showAndPlayYtVid);
