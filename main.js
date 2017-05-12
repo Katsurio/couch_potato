@@ -173,6 +173,7 @@ function appendMedia () {
     var trailerBtn = $('<button type="button" class="btn btn-primary trailerBtn"><span class="glyphicon glyphicon-play"></span>  Play Trailer</button>');
     var mediaDiv = $('<div>').append(mediaTitleDiv, mediaDateDiv,  mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
     $('.mediaModalBody').append(mediaDiv);
+    $('.trailerBtn').click(onPlayerReady);
 }
 
 /** @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
@@ -214,6 +215,7 @@ function createModalFormButtons ()
         img,
         label,
         text;
+
     var moods = [
         ["Happy", "images/happyEmoji.png"],
         ["Sad", "images/sadEmoji.png"],
@@ -412,13 +414,11 @@ function applyClickHandlers()
     createModalFormButtons();
     locationSubmitBtn();
     $('.mood-group-container label').click(selectMoodClickHandler);
-    $('.submitBtn').click(moodSubmitClick);
-    $('.submitBtn').click(popupClickHandler);
+    $('.submitBtn').click(moodSubmitClick).click(popupClickHandler);
     $('#pug').on('click', popupClickHandler);
     $('#google-icon').on('click', function() {
         $('#foodModal').modal('show');
     });
-    $('.trailerBtn').click(onPlayerReady);
     // $('#google-icon').on('click', function() {
     //     $('#drinkModal').modal('show');
     // });
@@ -427,8 +427,6 @@ function applyClickHandlers()
 }
 
 $(document).ready(applyClickHandlers);
-
-
 
 
 var player;
