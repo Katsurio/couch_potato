@@ -103,7 +103,8 @@ function drinkAjaxCall() {
  * @name - mediaMood
  */
 function mediaMood() {
-    switch($('input[name=radOption]:checked').val()) {
+    var pugtato = $("label[class=selected]")[0].htmlFor;
+    switch(pugtato) {
         case 'Happy':
             mood = 35;
             break;
@@ -233,6 +234,7 @@ function onError(error)
  */
 function showAndPlayYtVid()
 {
+    $(mediaDiv).empty();
     console.log("Line 206: function showAndPlayYtVid() invoked");
     $('.yt-player-container').toggleClass('hidden_vid');
     player.loadVideoById(mediaIDVideo);
@@ -298,51 +300,11 @@ function createModalFormButtons ()
  * @function - Ensures that only 1 mood radio button is selected
  * @name - selectMoodClickHandler
  */
-
-// TODO: Fix the bug that prevents reselecting (*click on the same mood multiple times in a row)
 function selectMoodClickHandler ()
 {
-//     if (_1stClicked !== null && _2ndClicked === null)
-//     {
-//         _2ndClicked = $(this).addClass('selected');
-//
-//         if(_1stClicked === _2ndClicked)
-//         {
-//             $(_1stClicked, _2ndClicked).removeClass('selected');
-//             _1stClicked = null;
-//             _2ndClicked = null;
-//         }
-//         else
-//         {
-//             $(_1stClicked).removeClass('selected');
-//             _1stClicked = null;
-//         }
-//     else if (_1stClicked === null && _2ndClicked === null)
-//     {
-//         _1stClicked = $(this).addClass('selected');
-//     }
-//     } else {
-//         _1stClicked = $(this).addClass('selected');
-//         $(_2ndClicked).removeClass('selected');
-//         _2ndClicked = null;
-//         console.warn("#3 esle: _1stClicked="  + _1stClicked + " _2ndClicked="  + _2ndClicked);
-//     }
-
-
-
-    if(_1stClicked !== null && _2ndClicked === null)
-    {
-        _2ndClicked = $(this).addClass('selected');
-        $(_1stClicked).removeClass('selected');
-        _1stClicked = null;
-    } else if (_2ndClicked !== null && _1stClicked === null) {
-        _1stClicked = $(this).addClass('selected');
-        $(_2ndClicked).removeClass('selected');
-        _2ndClicked = null;
-    } else {
-        _1stClicked = $(this);
-        _1stClicked.addClass('selected');
-    }
+    $('.mood-group-container label').click(function(){
+        $(this).addClass('selected').siblings().removeClass('selected');
+    });
 }
 
 /**
@@ -350,7 +312,9 @@ function selectMoodClickHandler ()
  * @name - foodTypePicker
  */
 function foodTypePicker() {
-    switch($('input[name=radOption]:checked').val()) {
+    var pugtato = $("label[class=selected]")[0].htmlFor;
+    switch(pugtato)
+    {
         case 'Happy':
             emotionKeyword = 'mexican';
             break;
@@ -465,6 +429,12 @@ function attachRestaurantsToDom() {
 function locationSubmitBtn() {
     $('#locationSubmitBtn').on('click', function() {
         userLocation = $('#locationInput').val();
+        console.log(userLocation);
+        if(userLocation === "dandalf") {
+            window.open("https://www.youtube.com/watch?v=ZRJfrwnvbCs");
+            $('#locationInput').val('');
+            return;
+        }
         restaurantAjaxCall();
         $('#locationInput').val('');
     });
@@ -473,6 +443,11 @@ function locationSubmitBtn() {
         if(keyPressed === 13) {
             e.preventDefault();
             userLocation = $('#locationInput').val();
+            if(userLocation === "dandalf") {
+                window.open("https://www.youtube.com/watch?v=ZRJfrwnvbCs");
+                $('#locationInput').val('');
+                return;
+            }
             $('#foodModalInfoDiv > h3').empty();
             $('#foodModalInfoDiv > a').empty();
             restaurantAjaxCall();
@@ -481,10 +456,15 @@ function locationSubmitBtn() {
     });
 }
 
-//TODO: Finish JSDoc
+function resetApp() {
+    $("#reset").click(function () {
+        window.location.reload();
+    });
+}
+
 /**
- * @function -
- * @name - locationSubmitBtn
+ * @function - click handler for TMDB Ajax call, passes in mood variable as genre id number
+ * @name - moodSubmitClick
  */
 function moodSubmitClick (){
     TMDBajax(mood);
@@ -514,10 +494,15 @@ function applyClickHandlers()
     $('#google-icon').on('click', function() {
         $('#foodModal').modal('show');
     });
-    $('#mediaContainer').on('hidden.bs.modal', function () {
-        $(this).find("#mediaModalBody").val('');
 
+    $('#mediaModal').on('hidden.bs.modal', function () {
+        $("#mediaModalBody").empty();
     });
+    // $('#mood-container').on('hidden.bs.modal', function () {
+    //     $("").removeClass('selected');
+    // });
+
+    resetApp();
     // $('#google-icon').on('click', function() {
     //     $('#drinkModal').modal('show');
     // });

@@ -16,22 +16,23 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             <a class="navbar-brand" href="#">Po-tah-to</a>
         </div>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navBar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <ul class="nav navbar-nav">
-            <li><a href="#">Home</a></li>
-            <!--<li><a href="#">Link</a></li>-->
-            <!--<li><a href="#">Link</a></li>-->
-        </ul>
+        <div class="collapse navbar-collapse" id="navBar">
+            <ul class="nav navbar-nav navbar-right">
+                <button class="btn btn-danger navbar-btn" id="reset">Start Over</button>
+                <!--<li><a href="#">Link</a></li>-->
+                <!--<li><a href="#">Link</a></li>-->
+            </ul>
+        </div>
     </div>
 </nav>
-
-<div class="container">
+<div class="container" id="mainContainer">
     <div id="google-icon">
         <img src="images/googleMaps.png">
     </div>
@@ -45,23 +46,24 @@
         </p>
     </div>
 
-    <div id="modalContainer">
+    <div id="modalContainer" id="modal1">
         <div id="myModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title">greetings humans!</h4>
-                        <p>Welcome to our app! I trust that you have been working super hard lately - some with your API Hackathon & others with final projects. That's what I am here for. Let me help you find the items you need for your couch potato starter kits, hehe. Please feel free to click Mr. Pugtato Head to get started.</p>
                     </div>
                     <div class="modal-body">
-                        <p></p>
+                        <p>Feeling burnt out?</p>
+                        <p>Sweet, you've come to the right place, hehe.</p>
+                        <p>Click on Mr. Pugtato Head to get started.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container" id="mood-container">
+    <div class="container modal2" id="mood-container">
         <!-- Modal -->
         <div class="modal fade" id="settingsModal" role="dialog">
             <div class="modal-dialog modal-lg">
@@ -88,7 +90,7 @@
             </div>
         </div>
     </div>
-    <div id="mediaContainer">
+    <div id="mediaContainer" class="modal3">
         <div id="mediaModal" class="modal fade">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -106,7 +108,7 @@
         </div>
     </div>
 
-    <div class="container" id="food-container">
+    <div class="container modal4" id="food-container">
         <!-- Modal -->
         <div class="modal fade" id="foodModal" role="dialog">
             <div class="modal-dialog modal-lg">
@@ -134,7 +136,7 @@
         </div>
     </div>
 
-    <div class="container" id="drink-container">
+    <div class="container modal5" id="drink-container">
         <!-- Modal -->
         <div class="modal fade" id="drinkModal" role="dialog">
             <div class="modal-dialog modal-lg">
