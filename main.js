@@ -79,7 +79,8 @@ function drinkAjaxCall() {
             globalResult = result;
             drinkName = globalResult.drinks[0].strDrink;
             instructions = globalResult.drinks[0].strInstructions;
-            drinkImage = globalResult.drinks[0].strDrinkThumb;
+            initialDrinkImage = globalResult.drinks[0].strDrinkThumb;
+            drinkImage = 'https' + initialDrinkImage.slice(4);
             drinkIngredients = [];
             ingredientMeasures = [];
 
