@@ -1,18 +1,69 @@
 /**
  * Created by Katsurio on 5/10/17.
  */
-/** @function - Function that shuffles the cards' images.
- * @name shuffleCards
- * @param {String} cardBackImg - A strings that contains the path to the cards' back image.
- * @param {String[]} cardFaceImgs - An array of strings that contain the paths to the card faces' images.
+/**
+ * @function - Blahs and whatnot...
+ * @name - whimsicalHorseGallop
+ * @param {String} saddle - A string that contains blah....
+ * @param {String[]} reigns - An array of strings that uhbluhs...
+ * @return {String[]} - Returns an array of strings that contain hullah bahloo...
  */
-// Booze API Call
-var globalResult;
-var drinkName = null;
-var instructions = null;
-var drinkImage = null;
-var drinkIngredients = [];
-var ingredientMeasures = [];
+
+/**
+ * @var
+ * All the global variables
+ */
+// Booze API variables
+var globalResult,
+    drinkName = null,
+    instructions = null,
+    drinkImage = null,
+    drinkIngredients = [],
+    ingredientMeasures = [],
+// Movie API variables
+    mediaRes,
+    mood = '',
+    mediaTitle = null,
+    mediaDate = null,
+    mediaGenre = null,
+    mediaPoster = null,
+    mediaDescr = null,
+    mediaIDVideo = null,
+    mediaID = null,
+    TMDBurl = "http://image.tmdb.org/t/p/w185/",
+    mediaGenreKey = [
+    {"id": 28, "name": "Action"},
+    {"id": 12, "name": "Adventure"},
+    {"id": 16, "name": "Animation"},
+    {"id": 35, "name": "Comedy"},
+    {"id": 80, "name": "Crime"},
+    {"id": 99, "name": "Documentary"},
+    {"id": 18, "name": "Drama"},
+    {"id": 10751, "name": "Family"},
+    {"id": 14, "name": "Fantasy"},
+    {"id": 36, "name": "History"},
+    {"id": 27, "name": "Horror"},
+    {"id": 10402, "name": "Music"},
+    {"id": 9648, "name": "Mystery"},
+    {"id": 10749, "name": "Romance"},
+    {"id": 878, "name": "Science Fiction"},
+    {"id": 10770, "name": "TV Movie"},
+    {"id": 53, "name": "Thriller"},
+    {"id": 10752, "name": "War"},
+    {"id": 37, "name": "Western"}
+],
+// Youtube API variables
+    player,
+// Mood select check variables
+    _1stClicked = null,
+    _2ndClicked = null,
+//Google Places API ariables
+    userLocation = null,
+    emotionKeyword = '',
+    userLongLat = null,
+    restaurantLoopList = null,
+    restaurantFinalId = null,
+    restaurantResults = [];
 
 /**
  * @function - Initiates an AJAX call to CocktailDB for a random drink
@@ -46,47 +97,11 @@ function drinkAjaxCall() {
     });
 }
 
-/**
- * @function - Initiates an AJAX call to The Movie DB for a movie choice
- * @name - TMDBajax
- * @param {Number}
+
+/** TODO: Finish JSDoc
+ * @function - Checks the input value on submit from the mood select modal
+ * @name - mediaMood
  */
-// Movie/TV API Call
-
-// loop through each object in the array and find the corresponding id, return lookup table/array
-
-var mediaRes;
-var mood = '';
-var mediaTitle = null;
-var mediaDate = null;
-var mediaGenre = null;
-var mediaPoster = null;
-var mediaDescr = null;
-var mediaIDVideo = null;
-var mediaID = null;
-var TMDBurl = "http://image.tmdb.org/t/p/w185/";
-var mediaGenreKey = [
-    {"id": 28, "name": "Action"},
-    {"id": 12, "name": "Adventure"},
-    {"id": 16, "name": "Animation"},
-    {"id": 35, "name": "Comedy"},
-    {"id": 80, "name": "Crime"},
-    {"id": 99, "name": "Documentary"},
-    {"id": 18, "name": "Drama"},
-    {"id": 10751, "name": "Family"},
-    {"id": 14, "name": "Fantasy"},
-    {"id": 36, "name": "History"},
-    {"id": 27, "name": "Horror"},
-    {"id": 10402, "name": "Music"},
-    {"id": 9648, "name": "Mystery"},
-    {"id": 10749, "name": "Romance"},
-    {"id": 878, "name": "Science Fiction"},
-    {"id": 10770, "name": "TV Movie"},
-    {"id": 53, "name": "Thriller"},
-    {"id": 10752, "name": "War"},
-    {"id": 37, "name": "Western"}
-];
-
 function mediaMood() {
     switch($('input[name=radOption]:checked').val()) {
         case 'Happy':
@@ -119,7 +134,11 @@ function mediaMood() {
     }
 }
 
-
+/**
+ * @function - Initiates an AJAX call to The Movie DB for a movie choice
+ * @name - TMDBajax
+ */
+// loops through each object in the array,finds the corresponding id, and returns lookup table/array
 function TMDBajax () {
     mediaMood();
     $.ajax({
@@ -142,7 +161,6 @@ function TMDBajax () {
                     mediaGenre = mediaGenreKey[i]['name'];
                 }
             }
-
             $.ajax({
                 data: 'json',
                 url: "https://api.themoviedb.org/3/movie/" + mediaID + "/videos?language=en-US&api_key=" + apiKeys.TMDB,
@@ -153,52 +171,83 @@ function TMDBajax () {
             });
             appendMedia();
         }
-
     });
-
 }
 
-/** @function - Creates DOM elements and attaches the information pulled from The Movie DB
+/**
+ * @function - Creates DOM elements and attaches the information pulled from The Movie DB
  * @name - appendMedia
  */
 function appendMedia () {
     mediaDate = "(" + (mediaDate.slice(0, 4)) + ")";
-
-    var mediaPosterDiv = $('<img>').attr('src', TMDBurl + mediaPoster).addClass('posterDiv');
-    var mediaTitleDiv = $('<div>').addClass('titleDiv').text(mediaTitle);
-    var mediaDateDiv = $('<div>').addClass('dateDiv').text(mediaDate);
-    var mediaDescrDiv = $('<div>').addClass('descrDiv').text(mediaDescr);
-    var mediaGenreDiv = $('<div>').addClass('genreDiv').text(mediaGenre);
-    var trailerBtn = $('<button type="button" class="btn btn-primary trailerBtn"><span class="glyphicon glyphicon-play"></span>  Play Trailer</button>');
-    var mediaDiv = $('<div>').append(mediaTitleDiv, mediaDateDiv, mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
+    var mediaPosterDiv = $('<img>').attr('src', TMDBurl + mediaPoster).addClass('posterDiv'),
+        mediaTitleDiv = $('<div>').addClass('titleDiv').text(mediaTitle),
+        mediaDateDiv = $('<div>').addClass('dateDiv').text(mediaDate),
+        mediaDescrDiv = $('<div>').addClass('descrDiv').text(mediaDescr),
+        mediaGenreDiv = $('<div>').addClass('genreDiv').text(mediaGenre),
+        trailerBtn = $('<button type="button" class="btn btn-primary trailerBtn"><span class="glyphicon glyphicon-play"></span>  Play Trailer</button>'),
+        mediaDiv = $('<div>').append(mediaTitleDiv, mediaDateDiv, mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
     $('.mediaModalBody').append(mediaDiv);
-    $('.trailerBtn').click(onPlayerReady);
-    $('.trailerBtn').on('click', function () {
-        $('.yt-player-container').toggleClass('hidden_vid');
-    });
-    //
+    $('.trailerBtn').click(showAndPlayYtVid);
+
     // $('#mediaModal .close').on('click', function () {
     //     $('#pug').addClass('tada');
     // });
 }
-/** @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
+
+/**
+ * @function - Automagically invoked by YT API. Acts as a callback for when the YT iFrame's ready.
+ * @name - attachDrinkToDom
+ */
+function onYouTubeIframeAPIReady()
+{
+    player = new YT.Player('yt-player', {
+        height: '390',
+        width: '640',
+        // Set the id of the video to be played
+        videoId: 'Pukw8Ovl6Tc',
+        // Setup event handlers
+        events: {
+            'onError': onError
+        }
+    });
+}
+
+/**
+ * @function - Handles YT API error(s)
+ * @name onError
+ * @param {Object} error
+ */
+function onError(error)
+{
+    // Update errors on page
+    console.log('ERROR: ' + error);
+}
+
+/**
+ * @function - Shows YT player and plays vid when invoked
+ * @name - showAndPlayYtVid
+ */
+function showAndPlayYtVid()
+{
+    console.log("Line 206: function showAndPlayYtVid() invoked");
+    $('.yt-player-container').toggleClass('hidden_vid');
+    player.loadVideoById(mediaIDVideo);
+}
+
+/**
+ * @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
  * @name - attachDrinkToDom
  */
 function attachDrinkToDom() {
     // var randomDrinkDiv = $('<div>').addClass('container thumbnail').css({'text-align': 'center'});
-    var drinkImageImg = $('<img>').attr('src', drinkImage).css({'height': '35vmin', 'width': '35vmin'});
-    var captionDiv = $('<div>').addClass('caption');
-    var drinkNameH3 = $('<h3>').text(drinkName);
-    var howToMakeH3 = $('<h3>').text('How to make the drink:').css({'line-height': '3', 'font-weight': '500'});
-    var drinkInstructionsH4 = $('<h4>').text(instructions);
-    var drinkIngredientsH3 = $('<h3>').text('What you\'ll need:').css({'line-height': '3', 'font-weight': '500'});
-
-    $('#drinkModalInfoDiv').append(drinkImageImg)
-        .append(captionDiv)
-        .append(drinkNameH3)
-        .append(howToMakeH3)
-        .append(drinkInstructionsH4)
-        .append(drinkIngredientsH3);
+    var drinkImageImg = $('<img>').attr('src', drinkImage).css({'height': '35vmin', 'width': '35vmin'}),
+        captionDiv = $('<div>').addClass('caption'),
+        drinkNameH3 = $('<h3>').text(drinkName),
+        howToMakeH3 = $('<h3>').text('How to make the drink:').css({'line-height': '3', 'font-weight': '500'}),
+        drinkInstructionsH4 = $('<h4>').text(instructions),
+        drinkIngredientsH3 = $('<h3>').text('What you\'ll need:').css({'line-height': '3', 'font-weight': '500'});
+    $('#drinkModalInfoDiv').append(drinkImageImg, captionDiv, drinkNameH3, howToMakeH3, drinkInstructionsH4, drinkIngredientsH3);
 
     for(var i = 0; i < drinkIngredients.length; i++) {
         var newIngredientH4 = $('<h4>');
@@ -211,17 +260,14 @@ function attachDrinkToDom() {
     }
 }
 
+/**
+ * @function - Creates mood select modal elements and attaches to the DOM
+ * @name - createModalFormButtons
+ */
 function createModalFormButtons ()
 {
-    var i,
-        temp,
-        url,
-        input_radio,
-        img,
-        label,
-        text;
-
-    var moods = [
+    var i, temp, url, input_radio, img, label, text,
+        moods = [
         ["Happy", "images/happyEmoji.png"],
         ["Sad", "images/sadEmoji.png"],
         ["Angry", "images/angryEmoji.png"],
@@ -236,9 +282,7 @@ function createModalFormButtons ()
         temp = moods[i];
         url = moods[i][1];
         input_radio = $("<input type='radio'/>")
-            .attr("value", temp[0])
-            .attr("id", temp[0])
-            .attr("name", "radOption");
+            .attr({"value" : temp[0]}, {"id" : temp[0]}, {"name" : "radOption"});
         img = $("<img>").attr('src', url);
         text = $('<span>').text(temp[0]);
         label = $('<label>').attr('for', temp[0]).append(img, '<br>', text);
@@ -247,10 +291,42 @@ function createModalFormButtons ()
     $('.mood-group-container input:radio').addClass('hidden');
 }
 
+/**
+ * @function - Ensures that only 1 mood radio button is selected
+ * @name - selectMoodClickHandler
+ */
 
-var _1stClicked = null,
-    _2ndClicked = null;
-function selectMoodClickHandler () {
+// TODO: Fix the bug that prevents reselecting (*click on the same mood multiple times in a row)
+function selectMoodClickHandler ()
+{
+//     if (_1stClicked !== null && _2ndClicked === null)
+//     {
+//         _2ndClicked = $(this).addClass('selected');
+//
+//         if(_1stClicked === _2ndClicked)
+//         {
+//             $(_1stClicked, _2ndClicked).removeClass('selected');
+//             _1stClicked = null;
+//             _2ndClicked = null;
+//         }
+//         else
+//         {
+//             $(_1stClicked).removeClass('selected');
+//             _1stClicked = null;
+//         }
+//     else if (_1stClicked === null && _2ndClicked === null)
+//     {
+//         _1stClicked = $(this).addClass('selected');
+//     }
+//     } else {
+//         _1stClicked = $(this).addClass('selected');
+//         $(_2ndClicked).removeClass('selected');
+//         _2ndClicked = null;
+//         console.warn("#3 esle: _1stClicked="  + _1stClicked + " _2ndClicked="  + _2ndClicked);
+//     }
+
+
+
     if(_1stClicked !== null && _2ndClicked === null)
     {
         _2ndClicked = $(this).addClass('selected');
@@ -266,15 +342,8 @@ function selectMoodClickHandler () {
     }
 }
 
-//Google Places API
-var userLocation = null;
-var emotionKeyword = '';
-var userLongLat = null;
-var restaurantLoopList = null;
-var restaurantFinalId = null;
-var restaurantResults = [];
-
-/** @function - Pulls data from the Emoji modal and puts in a specific query string into the Google Places search string
+/**
+ * @function - Pulls data from the Emoji modal to pass into the Google Places query string
  * @name - foodTypePicker
  */
 function foodTypePicker() {
@@ -309,7 +378,8 @@ function foodTypePicker() {
     }
 }
 
-/** @function - Initiates a series of AJAX calls to Google Places for the top three restaurant around the user that is currently open and delivers
+/**
+ * @function - Initiates a series of AJAX calls to Google Places for the top three restaurant around the user that is currently open and delivers
  * @name - restaurantAjaxCall
  */
 function restaurantAjaxCall() {
@@ -369,23 +439,26 @@ function restaurantAjaxCall() {
     });
 }
 
-/** @function - Creates DOM elements and attaches the information pulled from Google Places to them
+/**
+ * @function - Creates DOM elements and attaches the information pulled from Google Places to them
  * @name - attachRestaurantsToDom
  */
 function attachRestaurantsToDom() {
-    var restaurantNameH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].name);
-    var restaurantAddressH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].address);
-    var restaurantPhoneH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].phone);
-    var restaurantLinkAnchor = $('<a>').attr({'href': restaurantResults[restaurantResults.length-1].link, 'target': '_blank'});
-    var restaurantLinkImg = $('<img src="images/googleMaps.png">').css({'height': '10vmin','width': '10vmin'});
+    var restaurantNameH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].name),
+        restaurantAddressH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].address),
+        restaurantPhoneH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].phone),
+        restaurantLinkAnchor = $('<a>').attr({'href': restaurantResults[restaurantResults.length-1].link, 'target': '_blank'}),
+        restaurantLinkImg = $('<img src="images/googleMaps.png">').css({'height': '10vmin','width': '10vmin'});
 
-    $('#foodModalInfoDiv').append(restaurantNameH3)
-        .append(restaurantAddressH3)
-        .append(restaurantPhoneH3)
-        .append(restaurantLinkAnchor);
+    $('#foodModalInfoDiv').append(restaurantNameH3, restaurantAddressH3, restaurantPhoneH3, restaurantLinkAnchor);
     $(restaurantLinkAnchor).append(restaurantLinkImg);
 }
 
+//TODO: Finish JSDoc
+/**
+ * @function -
+ * @name - locationSubmitBtn
+ */
 function locationSubmitBtn() {
     $('#locationSubmitBtn').on('click', function() {
         userLocation = $('#locationInput').val();
@@ -405,14 +478,28 @@ function locationSubmitBtn() {
     });
 }
 
+//TODO: Finish JSDoc
+/**
+ * @function -
+ * @name - locationSubmitBtn
+ */
 function moodSubmitClick (){
     TMDBajax(mood);
 }
+
+//TODO: Finish JSDoc
+/**
+ * @function -
+ * @name - popupClickHandler
+ */
 function popupClickHandler(){
     $('.popup').toggle();
 }
 
-
+/**
+ * @function - Applies click handlers, creates DOM elements, and basically calls all the functions when invoked in the $(document).ready()
+ * @name - applyClickHandlers
+ */
 function applyClickHandlers()
 {
     $("#myModal").modal('show');
@@ -432,33 +519,3 @@ function applyClickHandlers()
 }
 
 $(document).ready(applyClickHandlers);
-
-
-var player;
-// Callback for when the YouTube iFrame player is ready
-function onYouTubeIframeAPIReady()
-{
-    player = new YT.Player('yt-player', {
-        // Set Player height and width
-        height: '390',
-        width: '640',
-        // Set the id of the video to be played
-        videoId: 'Pukw8Ovl6Tc',
-        // Setup event handlers
-        events: {
-            // 'onReady': onPlayerReady,
-            'onError': onError
-        }
-    });
-}
-function onError(error)
-{
-    // Update errors on page
-    console.log('ERROR: ' + error);
-}
-function onPlayerReady()
-{
-    console.log("onPlayerReady running");
-    // Cue video after player is ready
-    player.loadVideoById(mediaIDVideo);
-}
