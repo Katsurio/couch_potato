@@ -175,6 +175,7 @@ body {
 
 .tada {
     animation-name: tada;
+    animation-duration: 10s;
 }
 
 #locationInput {
@@ -246,7 +247,7 @@ iframe {
 }
 
 .posterDiv{
-    height: 60%;
+    height: 50%;
     width: 40%;
     display: inline-block;
     position: relative;
@@ -271,3 +272,9 @@ iframe {
     margin: 10%;
 }
 
+#pug > #clickme {
+    display: block;
+    width: 25%;
+    transform: rotate(-46deg);
+    padding: 0;
+}

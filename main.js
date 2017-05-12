@@ -303,9 +303,7 @@ function createModalFormButtons ()
  */
 function selectMoodClickHandler ()
 {
-    $('.mood-group-container label').click(function(){
-        $(this).addClass('selected').siblings().removeClass('selected');
-    });
+    $(this).addClass('selected').siblings().removeClass('selected');
     $("#google-icon").show();
 }
 
@@ -472,9 +470,9 @@ function moodSubmitClick (){
     TMDBajax(mood);
 }
 
-//TODO: Finish JSDoc
+
 /**
- * @function -
+ * @function - takes class of hidden off of popup speech bubble
  * @name - popupClickHandler
  */
 function popupClickHandler(){
@@ -500,7 +498,6 @@ function applyClickHandlers()
     $('#dratini-glass').on('click', function() {
         $('#drinkModal').modal('show');
     });
-
     $('#mediaModal').on('hidden.bs.modal', function () {
         mediaDivArr= [];
         mediaIDVideo = "";
@@ -510,7 +507,6 @@ function applyClickHandlers()
     });
     $('#mood-container').on('hidden.bs.modal', function () {
         $("label").removeClass('selected');
-        $("#pug").addClass('tada');
     });
     resetApp();
     drinkAjaxCall();
