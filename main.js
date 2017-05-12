@@ -339,8 +339,7 @@ function selectMoodClickHandler ()
     }
     else
     {
-        _1stClicked = $(this);
-        _1stClicked.addClass('selected');
+        _1stClicked = $(this).addClass('selected');
     }
 }
 
