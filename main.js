@@ -364,8 +364,6 @@ function applyClickHandlers()
 $(document).ready(applyClickHandlers);
 
 
-
-
 // var player;
 // // Callback for when the YouTube iFrame player is ready
 // function onYouTubeIframeAPIReady()
