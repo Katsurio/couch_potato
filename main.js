@@ -53,10 +53,7 @@ var globalResult,
     {"id": 37, "name": "Western"}
 ],
 // Youtube API variables
-    player,
-// Mood select check variables
-    _1stClicked = null,
-    _2ndClicked = null,
+    player;
 
 /**
  * @function - Initiates an AJAX call to CocktailDB for a random drink
@@ -187,14 +184,13 @@ function appendMedia () {
         mediaDiv = $('<div>').append(mediaDivArr);
     $('.mediaModalBody').append(mediaDiv);
     $('.trailerBtn').click(showAndPlayYtVid);
-
     // $('#mediaModal .close').on('click', function () {
     //     $('#pug').addClass('tada');
     // });
 }
 
 /**
- * @function - Automagically invoked by YT API. Acts as a callback for when the YT iFrame's ready.
+ * @function - Automatically invoked by YT API. Acts as a callback for when the YT iFrame's ready.
  * @name - attachDrinkToDom
  */
 function onYouTubeIframeAPIReady()
@@ -203,7 +199,7 @@ function onYouTubeIframeAPIReady()
         height: '390',
         width: '640',
         // Set the id of the video to be played
-        videoId: 'Pukw8Ovl6Tc',
+        videoId: 'OpLK_7OL-LE',
         // Setup event handlers
         events: {
             'onError': onError
@@ -229,11 +225,12 @@ function onError(error)
 function showAndPlayYtVid()
 {
     $(mediaDiv).empty();
-    console.log("Line 206: function showAndPlayYtVid() invoked");
     $('.yt-player-container').toggleClass('hidden_vid');
     player.loadVideoById(mediaIDVideo);
 }
-
+function removeMediaIDVideo() {
+      player.stopVideo();
+}
 /**
  * @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
  * @name - attachDrinkToDom
@@ -243,9 +240,9 @@ function attachDrinkToDom() {
     var drinkImageImg = $('<img>').attr('src', drinkImage).css({'height': '35vmin', 'width': '35vmin'}),
         captionDiv = $('<div>').addClass('caption'),
         drinkNameH3 = $('<h3>').text(drinkName),
-        howToMakeH3 = $('<h3>').text('How to make the drink:').css({'line-height': '3', 'font-weight': '500'}),
+        howToMakeH3 = $('<h4>').text('How to make the drink:').css({'line-height': '3', 'font-weight': '500'}),
         drinkInstructionsH4 = $('<h4>').text(instructions),
-        drinkIngredientsH3 = $('<h3>').text('What you\'ll need:').css({'line-height': '3', 'font-weight': '500'});
+        drinkIngredientsH3 = $('<p>').text('What you\'ll need:').css({'line-height': '3', 'font-weight': '500'});
     $('#drinkModalInfoDiv').append(drinkImageImg, captionDiv, drinkNameH3, howToMakeH3, drinkInstructionsH4, drinkIngredientsH3);
 
     for(var i = 0; i < drinkIngredients.length; i++) {
@@ -299,6 +296,7 @@ function selectMoodClickHandler ()
     $('.mood-group-container label').click(function(){
         $(this).addClass('selected').siblings().removeClass('selected');
     });
+    $("#google-icon").show();
 }
 
 function resetApp() {
@@ -337,19 +335,23 @@ function applyClickHandlers()
     $('.submitBtn').click(moodSubmitClick).click(popupClickHandler);
     $('#pug').on('click', popupClickHandler);
 
-    $('#mediaModal').on('hidden.bs.modal', function () {
-        $("#mediaModalBody").empty();
-    });
-    // $('#mood-container').on('hidden.bs.modal', function () {
-    //     $("").removeClass('selected');
-    // });
-
     resetApp();
-    // $('#google-icon').on('click', function() {
-    //     $('#drinkModal').modal('show');
-    // });
-    drinkAjaxCall();
+    $('#dratini-glass').on('click', function() {
+        $('#drinkModal').modal('show');
+    });
 
+    $('#mediaModal').on('hidden.bs.modal', function () {
+        mediaDivArr= [];
+        mediaIDVideo = "";
+        $('.yt-player-container').toggleClass('hidden_vid');
+        console.log('mediaModal');
+        removeMediaIDVideo();
+    });
+    $('#mood-container').on('hidden.bs.modal', function () {
+        $("label").removeClass('selected');
+    });
+    resetApp();
+    drinkAjaxCall();
 }
 
 $(document).ready(applyClickHandlers);
