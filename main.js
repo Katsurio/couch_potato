@@ -193,7 +193,6 @@ function appendMedia () {
         mediaDiv = $('<div>').append(mediaDivArr);
     $('.mediaModalBody').append(mediaDiv);
     $('.trailerBtn').click(showAndPlayYtVid);
-
     // $('#mediaModal .close').on('click', function () {
     //     $('#pug').addClass('tada');
     // });
@@ -250,9 +249,9 @@ function attachDrinkToDom() {
     var drinkImageImg = $('<img>').attr('src', drinkImage).css({'height': '35vmin', 'width': '35vmin'}),
         captionDiv = $('<div>').addClass('caption'),
         drinkNameH3 = $('<h3>').text(drinkName),
-        howToMakeH3 = $('<h3>').text('How to make the drink:').css({'line-height': '3', 'font-weight': '500'}),
+        howToMakeH3 = $('<h4>').text('How to make the drink:').css({'line-height': '3', 'font-weight': '500'}),
         drinkInstructionsH4 = $('<h4>').text(instructions),
-        drinkIngredientsH3 = $('<h3>').text('What you\'ll need:').css({'line-height': '3', 'font-weight': '500'});
+        drinkIngredientsH3 = $('<p>').text('What you\'ll need:').css({'line-height': '3', 'font-weight': '500'});
     $('#drinkModalInfoDiv').append(drinkImageImg, captionDiv, drinkNameH3, howToMakeH3, drinkInstructionsH4, drinkIngredientsH3);
 
     for(var i = 0; i < drinkIngredients.length; i++) {
@@ -306,6 +305,7 @@ function selectMoodClickHandler ()
     $('.mood-group-container label').click(function(){
         $(this).addClass('selected').siblings().removeClass('selected');
     });
+    $("#google-icon").show();
 }
 
 /**
@@ -495,6 +495,10 @@ function applyClickHandlers()
     $('#google-icon').on('click', function() {
         $('#foodModal').modal('show');
     });
+    resetApp();
+    $('#dratini-glass').on('click', function() {
+        $('#drinkModal').modal('show');
+    });
 
     $('#mediaModal').on('hidden.bs.modal', function () {
         mediaDivArr= [];
@@ -507,13 +511,8 @@ function applyClickHandlers()
         $("label").removeClass('selected');
         $("#pug").addClass('tada');
     });
-
     resetApp();
-    // $('#google-icon').on('click', function() {
-    //     $('#drinkModal').modal('show');
-    // });
     drinkAjaxCall();
-
 }
 
 $(document).ready(applyClickHandlers);

@@ -1,5 +1,5 @@
 body {
-    background: url(images/pug_potato2.png) no-repeat center center fixed;
+    background: url(images/pug_potato2.png) no-repeat fixed left bottom;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -12,27 +12,51 @@ body {
     src: url(happy-camper-font.ttf);
 }
 
-#google-icon > img {
-    position: absolute;
-    height: 10vw;
+#google-icon {
+    position: fixed;
+    height: 40px;
+    display: none;
     transform: rotate(-6deg);
-    left: 2%;
-    top: 22%;
+    left: 30px;
+    top: 100px;
+}
+
+#google-icon > img {
+    width: 80px;
 }
 
 .modal-body {
     font-size: 20px;
     text-align: center;
-    font-family: Helvetica, sans-serif;;
+    font-family: Helvetica, sans-serif;
+}
+
+#food-modal {
+    max-height: 750px;
+}
+
+#pug {
+    position: fixed;
+    top: 370px;
+    left: 140px;
+    height: 305px;
 }
 
 #pug > img {
-    position: fixed;
-    bottom: 20%;
-    /*transform: rotate(-6deg);*/
+    transform: rotate(-12deg);
+    transition: all 1s;
+    -webkit-transition: all 1s;
+    width: 380px;
+}
 
-    transition:all 1s;
-    -webkit-transition:all 1s;
+#dratini-glass {
+    position: fixed;
+    bottom: 270px;
+    right: 500px;
+}
+
+#dratini-glass > img {
+    width: 55px;
 }
 
 .navbar {
@@ -105,6 +129,12 @@ body {
     margin: 0;
 }
 
+.mood-header {
+    text-align: left;
+    font-size: 35px;
+    font-family: happyCamper, Helvetica, sans-serif;
+}
+
 .popup{
     margin: 0;
     padding: 0;
@@ -132,7 +162,7 @@ body {
     display: inline-block;
 }
 #pug:hover{
-cursor:pointer;
+    cursor:pointer;
 }
 
 @keyframes tada {
@@ -184,8 +214,10 @@ cursor:pointer;
     font-family: happyCamper, Helvetica, sans-serif;
 }
 
+
 #drinkModalInfoDiv {
     width: 100%;
+    height: 200px;
 }
 
 /*@media screen and (max-width: 550px) {*/
@@ -211,7 +243,7 @@ cursor:pointer;
         width: 100vh;
         height: 100vh;
     }
-}
+
 .hidden_vid{
     display: none;
 }
@@ -220,6 +252,7 @@ iframe {
     height: 100%;
     width: 100%;
 }
+
 .yt-player-container {
     height: 60vh
 }
