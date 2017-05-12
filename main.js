@@ -56,14 +56,7 @@ var globalResult,
     player,
 // Mood select check variables
     _1stClicked = null,
-    _2ndClicked = null,
-//Google Places API ariables
-    userLocation = null,
-    emotionKeyword = '',
-    userLongLat = null,
-    restaurantLoopList = null,
-    restaurantFinalId = null,
-    restaurantResults = [];
+    _2ndClicked = null;
 
 /**
  * @function - Initiates an AJAX call to CocktailDB for a random drink
@@ -72,14 +65,15 @@ var globalResult,
 function drinkAjaxCall() {
     $.ajax({
         dataType: 'json',
-        url: 'http://www.thecocktaildb.com/api/json/v1/' + apiKeys.cocktailDb + '/random.php',
+        url: 'https://www.thecocktaildb.com/api/json/v1/' + apiKeys.cocktailDb + '/random.php',
         type: 'get',
         success: function(result) {
             console.log('CocktailDB AJAX Call Success!!!');
             globalResult = result;
             drinkName = globalResult.drinks[0].strDrink;
             instructions = globalResult.drinks[0].strInstructions;
-            drinkImage = globalResult.drinks[0].strDrinkThumb;
+            initialDrinkImage = globalResult.drinks[0].strDrinkThumb;
+            drinkImage = 'https' + initialDrinkImage.slice(4);
             drinkIngredients = [];
             ingredientMeasures = [];
 
@@ -307,7 +301,7 @@ function selectMoodClickHandler ()
     $("#google-icon").show();
 }
 
-/**
+   /**
  * @function - Pulls data from the Emoji modal to pass into the Google Places query string
  * @name - foodTypePicker
  */
@@ -455,7 +449,6 @@ function locationSubmitBtn() {
         }
     });
 }
-
 function resetApp() {
     $("#reset").click(function () {
         window.location.reload();
@@ -491,9 +484,7 @@ function applyClickHandlers()
     $('.mood-group-container label').click(selectMoodClickHandler);
     $('.submitBtn').click(moodSubmitClick).click(popupClickHandler);
     $('#pug').on('click', popupClickHandler);
-    $('#google-icon').on('click', function() {
-        $('#foodModal').modal('show');
-    });
+
     resetApp();
     $('#dratini-glass').on('click', function() {
         $('#drinkModal').modal('show');
