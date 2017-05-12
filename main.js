@@ -60,8 +60,8 @@ var mediaRes;
 var mood = '';
 var mediaTitle = null;
 var mediaDate = null;
+var mediaGenre = null;
 var mediaPoster = null;
-var mediaGenres = null;
 var mediaDescr = null;
 var mediaIDVideo = null;
 var mediaID = null;
@@ -150,8 +150,6 @@ function TMDBajax () {
                 type: "get",
                 success: function (res) {
                     mediaIDVideo = res.results[0]['key'];
-                    console.log(mediaIDVideo);
-                    // onPlayerReady();
                 }
             });
             appendMedia();
@@ -172,7 +170,7 @@ function appendMedia () {
     var mediaDateDiv = $('<div>').addClass('dateDiv').text(mediaDate);
     var mediaDescrDiv = $('<div>').addClass('descrDiv').text(mediaDescr);
     var mediaGenreDiv = $('<div>').addClass('genreDiv').text(mediaGenre);
-    var trailerBtn = $('<button type="button" class="btn btn-primary">Play Trailer</button>');
+    var trailerBtn = $('<button type="button" class="btn btn-primary trailerBtn"><span class="glyphicon glyphicon-play"></span>  Play Trailer</button>');
     var mediaDiv = $('<div>').append(mediaTitleDiv, mediaDateDiv,  mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
     $('.mediaModalBody').append(mediaDiv);
 }
@@ -392,6 +390,7 @@ function popupClickHandler(){
     $('.popup').toggle();
 }
 
+
 function applyClickHandlers()
 {
     $("#myModal").modal('show');
@@ -403,6 +402,7 @@ function applyClickHandlers()
     $('#google-icon').on('click', function() {
        $('#foodModal').modal('show');
     });
+    $('.trailerBtn').click(onPlayerReady);
 
 }
 
@@ -411,30 +411,31 @@ $(document).ready(applyClickHandlers);
 
 
 
-// var player;
-// // Callback for when the YouTube iFrame player is ready
-// function onYouTubeIframeAPIReady()
-// {
-//     player = new YT.Player('yt-player', {
-//         // Set Player height and width
-//         height: '390',
-//         width: '640',
-//         // Set the id of the video to be played
-//         videoId: 'Pukw8Ovl6Tc',
-//         // Setup event handlers
-//         events: {
-//             // 'onReady': onPlayerReady,
-//             'onError': onError
-//         }
-//     });
-// }
-// function onError(error)
-// {
-//     // Update errors on page
-//     console.log('ERROR: ' + error);
-// }
-// function onPlayerReady()
-// {
-//     // Cue video after player is ready
-//     player.cueVideoById(mediaIDVideo);
-// }
+var player;
+// Callback for when the YouTube iFrame player is ready
+function onYouTubeIframeAPIReady()
+{
+    player = new YT.Player('yt-player', {
+        // Set Player height and width
+        height: '390',
+        width: '640',
+        // Set the id of the video to be played
+        videoId: 'Pukw8Ovl6Tc',
+        // Setup event handlers
+        events: {
+            // 'onReady': onPlayerReady,
+            'onError': onError
+        }
+    });
+}
+function onError(error)
+{
+    // Update errors on page
+    console.log('ERROR: ' + error);
+}
+function onPlayerReady()
+{
+    console.log("onPlayerReady running");
+    // Cue video after player is ready
+    player.loadVideoById(mediaIDVideo);
+}
