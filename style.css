@@ -146,7 +146,6 @@ cursor:pointer;
     animation-name: tada;
 }
 
-
 #locationInput {
     display: inline-block;
     width: 13vw;
@@ -211,7 +210,22 @@ cursor:pointer;
         width: 100vh;
         height: 100vh;
     }
-  
+}
 .hidden_vid{
     display: none;
 }
+
+iframe {
+    height: 100%;
+    width: 100%;
+}
+.yt-player-container {
+    height: 60vh
+}
+
+#mediaContainer {
+    width: 80%;
+    height: 80%;
+}
+
+
