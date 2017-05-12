@@ -462,6 +462,12 @@ function attachRestaurantsToDom() {
 function locationSubmitBtn() {
     $('#locationSubmitBtn').on('click', function() {
         userLocation = $('#locationInput').val();
+        console.log(userLocation);
+        if(userLocation === "dandalf") {
+            window.open("https://www.youtube.com/watch?v=ZRJfrwnvbCs");
+            $('#locationInput').val('');
+            return;
+        }
         restaurantAjaxCall();
         $('#locationInput').val('');
     });
@@ -470,11 +476,22 @@ function locationSubmitBtn() {
         if(keyPressed === 13) {
             e.preventDefault();
             userLocation = $('#locationInput').val();
+            if(userLocation === "dandalf") {
+                window.open("https://www.youtube.com/watch?v=ZRJfrwnvbCs");
+                $('#locationInput').val('');
+                return;
+            }
             $('#foodModalInfoDiv > h3').empty();
             $('#foodModalInfoDiv > a').empty();
             restaurantAjaxCall();
             $('#locationInput').val('');
         }
+    });
+}
+
+function resetApp() {
+    $("#reset").click(function () {
+        window.location.reload();
     });
 }
 
@@ -511,6 +528,8 @@ function applyClickHandlers()
     $('#google-icon').on('click', function() {
         $('#foodModal').modal('show');
     });
+    resetApp();
+
     // $('#google-icon').on('click', function() {
     //     $('#drinkModal').modal('show');
     // });
