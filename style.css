@@ -19,6 +19,8 @@ body {
     left: 30px;
     top: 100px;
     font-family: happyCamper, Helvetica, sans-serif;
+    color: dodgerblue;
+    font-size: 2em;
 }
 #google-icon:hover{
     cursor:pointer;
@@ -26,6 +28,7 @@ body {
 
 #google-icon > img {
     width: 80px;
+    margin: 0 auto;
 }
 
 .modal-body {
@@ -52,6 +55,9 @@ body {
     position: absolute;
     bottom: 26%;
     right: 44%;
+    font-family: happyCamper, Helvetica, sans-serif;
+    color: dodgerblue;
+    font-size: 2em;
 }
 
 #dratini-glass > img {
