@@ -20,6 +20,12 @@ body {
     top: 22%;
 }
 
+.modal-body {
+    font-size: 20px;
+    text-align: center;
+    font-family: Helvetica, sans-serif;;
+}
+
 #pug > img {
     position: fixed;
     bottom: 20%;
@@ -44,7 +50,7 @@ body {
 
 .navbar-brand {
     font-family: happyCamper, Helvetica, sans-serif;
-    font-size: 5vw;
+    font-size: 65px;
     display: flex;
     justify-content: center;
     align-items: center;

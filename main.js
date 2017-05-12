@@ -60,8 +60,8 @@ var mediaRes;
 var mood = '';
 var mediaTitle = null;
 var mediaDate = null;
+var mediaGenre = null;
 var mediaPoster = null;
-var mediaGenres = null;
 var mediaDescr = null;
 var mediaIDVideo = null;
 var mediaID = null;
@@ -150,8 +150,6 @@ function TMDBajax () {
                 type: "get",
                 success: function (res) {
                     mediaIDVideo = res.results[0]['key'];
-                    console.log(mediaIDVideo);
-                    // onPlayerReady();
                 }
             });
             appendMedia();
@@ -172,9 +170,10 @@ function appendMedia () {
     var mediaDateDiv = $('<div>').addClass('dateDiv').text(mediaDate);
     var mediaDescrDiv = $('<div>').addClass('descrDiv').text(mediaDescr);
     var mediaGenreDiv = $('<div>').addClass('genreDiv').text(mediaGenre);
-    var trailerBtn = $('<button type="button" class="btn btn-primary">Play Trailer</button>');
+    var trailerBtn = $('<button type="button" class="btn btn-primary trailerBtn"><span class="glyphicon glyphicon-play"></span>  Play Trailer</button>');
     var mediaDiv = $('<div>').append(mediaTitleDiv, mediaDateDiv,  mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
     $('.mediaModalBody').append(mediaDiv);
+    $('.trailerBtn').click(onPlayerReady);
 }
 
 /** @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
@@ -216,6 +215,7 @@ function createModalFormButtons ()
         img,
         label,
         text;
+
     var moods = [
         ["Happy", "images/happyEmoji.png"],
         ["Sad", "images/sadEmoji.png"],
@@ -240,10 +240,25 @@ function createModalFormButtons ()
         $('.mood-group-container').append(input_radio, label);
     }
     $('.mood-group-container input:radio').addClass('hidden');
-    $('.mood-group-container label').click(function(){
-        $(this).addClass('selected').siblings().removeClass('selected');
-    });
+}
 
+
+var _1stClicked = null,
+    _2ndClicked = null;
+function selectMoodClickHandler () {
+    if(_1stClicked !== null && _2ndClicked === null)
+    {
+        _2ndClicked = $(this).addClass('selected');
+        $(_1stClicked).removeClass('selected');
+        _1stClicked = null;
+    } else if (_2ndClicked !== null && _1stClicked === null) {
+        _1stClicked = $(this).addClass('selected');
+        $(_2ndClicked).removeClass('selected');
+        _2ndClicked = null;
+    } else {
+        _1stClicked = $(this);
+        _1stClicked.addClass('selected');
+    }
 }
 
 //Google Places API
@@ -369,6 +384,12 @@ function attachRestaurantsToDom() {
 function locationSubmitBtn() {
     $('#locationSubmitBtn').on('click', function() {
         userLocation = $('#locationInput').val();
+        console.log(userLocation);
+        if(userLocation === "dandalf") {
+            window.open("https://www.youtube.com/watch?v=ZRJfrwnvbCs");
+            $('#locationInput').val('');
+            return;
+        }
         restaurantAjaxCall();
         $('#locationInput').val('');
     });
@@ -377,6 +398,11 @@ function locationSubmitBtn() {
         if(keyPressed === 13) {
             e.preventDefault();
             userLocation = $('#locationInput').val();
+            if(userLocation === "dandalf") {
+                window.open("https://www.youtube.com/watch?v=ZRJfrwnvbCs");
+                $('#locationInput').val('');
+                return;
+            }
             $('#foodModalInfoDiv > h3').empty();
             $('#foodModalInfoDiv > a').empty();
             restaurantAjaxCall();
@@ -400,13 +426,14 @@ function popupClickHandler(){
     $('.popup').toggle();
 }
 
+
 function applyClickHandlers()
 {
     $("#myModal").modal('show');
     createModalFormButtons();
     locationSubmitBtn();
-    $('.submitBtn').click(moodSubmitClick);
-    $('.submitBtn').click(popupClickHandler);
+    $('.mood-group-container label').click(selectMoodClickHandler);
+    $('.submitBtn').click(moodSubmitClick).click(popupClickHandler);
     $('#pug').on('click', popupClickHandler);
     $('#google-icon').on('click', function() {
         $('#foodModal').modal('show');
@@ -422,31 +449,32 @@ function applyClickHandlers()
 
 $(document).ready(applyClickHandlers);
 
+var player;
+// Callback for when the YouTube iFrame player is ready
+function onYouTubeIframeAPIReady()
+{
+    player = new YT.Player('yt-player', {
+        // Set Player height and width
+        height: '390',
+        width: '640',
+        // Set the id of the video to be played
+        videoId: 'Pukw8Ovl6Tc',
+        // Setup event handlers
+        events: {
+            // 'onReady': onPlayerReady,
+            'onError': onError
+        }
+    });
+}
+function onError(error)
+{
+    // Update errors on page
+    console.log('ERROR: ' + error);
+}
+function onPlayerReady()
+{
+    console.log("onPlayerReady running");
+    // Cue video after player is ready
+    player.loadVideoById(mediaIDVideo);
+}
 
-// var player;
-// // Callback for when the YouTube iFrame player is ready
-// function onYouTubeIframeAPIReady()
-// {
-//     player = new YT.Player('yt-player', {
-//         // Set Player height and width
-//         height: '390',
-//         width: '640',
-//         // Set the id of the video to be played
-//         videoId: 'Pukw8Ovl6Tc',
-//         // Setup event handlers
-//         events: {
-//             // 'onReady': onPlayerReady,
-//             'onError': onError
-//         }
-//     });
-// }
-// function onError(error)
-// {
-//     // Update errors on page
-//     console.log('ERROR: ' + error);
-// }
-// function onPlayerReady()
-// {
-//     // Cue video after player is ready
-//     player.cueVideoById(mediaIDVideo);
-// }
