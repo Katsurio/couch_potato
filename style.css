@@ -39,8 +39,8 @@ body {
 
 #pug {
     position: fixed;
-    top: 370px;
-    left: 140px;
+    top: 38%;
+    left: 10%;
     height: 305px;
 }
 
@@ -48,13 +48,13 @@ body {
     transform: rotate(-12deg);
     transition: all 1s;
     -webkit-transition: all 1s;
-    width: 380px;
+    width: 300px;
 }
 
 #dratini-glass {
     position: absolute;
     bottom: 26%;
-    right: 44%;
+    right: 34%;
     font-family: happyCamper, Helvetica, sans-serif;
     color: dodgerblue;
     font-size: 2em;
