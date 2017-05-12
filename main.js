@@ -72,7 +72,7 @@ var globalResult,
 function drinkAjaxCall() {
     $.ajax({
         dataType: 'json',
-        url: 'http://www.thecocktaildb.com/api/json/v1/' + apiKeys.cocktailDb + '/random.php',
+        url: 'https://www.thecocktaildb.com/api/json/v1/' + apiKeys.cocktailDb + '/random.php',
         type: 'get',
         success: function(result) {
             console.log('CocktailDB AJAX Call Success!!!');
