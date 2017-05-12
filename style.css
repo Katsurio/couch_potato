@@ -1,5 +1,5 @@
 body {
-    background: url(images/pug_potato2.png) no-repeat center center fixed;
+    background: url(images/pug_potato2.png) no-repeat fixed left bottom;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -12,12 +12,16 @@ body {
     src: url(happy-camper-font.ttf);
 }
 
-#google-icon > img {
-    position: absolute;
-    height: 10vw;
+#google-icon {
+    position: fixed;
+    height: 40px;
     transform: rotate(-6deg);
-    left: 2%;
-    top: 22%;
+    left: 30px;
+    top: 100px;
+}
+
+#google-icon > img {
+    width: 80px;
 }
 
 .modal-body {
