@@ -26,20 +26,14 @@
         <div class="collapse navbar-collapse" id="navBar">
             <ul class="nav navbar-nav navbar-right">
                 <button class="btn btn-danger navbar-btn" id="reset">Start Over</button>
-                <!--<li><a href="#">Link</a></li>-->
-                <!--<li><a href="#">Link</a></li>-->
             </ul>
         </div>
     </div>
 </nav>
 <div class="container" id="mainContainer">
-    <div id="google-icon">
-        <img src="images/googleMaps.png">
-    </div>
-
-    <div id="pug">
-        <img src="images/pug.png">
-    </div>
+    <div id="google-icon"><img src="images/googleMaps.png"></div>
+    <div id="pug"><img src="images/pug.png"></div>
+    <div id="dratini-glass"><img src="images/dratini_glass.png"></div>
     <div class='popup'>
         <p class="bubble">Hi there! I'm the Couch Pugtato! Let's kick back and relax.<br>
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#settingsModal">Get Started</button>
@@ -75,10 +69,10 @@
                         <h4 class="modal-title">Couch Potato</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="container">
-                            <h2>Pick a mood:</h2>
+                        <div class="container emoji-container">
+                            <h2 class="mood-header">Pick a mood:</h2>
                             <form>
-                                <div class="form-group mood-group-container">
+                                <div class="form-group mood-group-container col-md-12">
                                 </div>
                             </form>
                         </div>
@@ -90,6 +84,7 @@
             </div>
         </div>
     </div>
+
     <div id="mediaContainer" class="modal3">
         <div id="mediaModal" class="modal fade">
             <div class="modal-dialog">
@@ -111,8 +106,7 @@
     <div class="container modal4" id="food-container">
         <!-- Modal -->
         <div class="modal fade" id="foodModal" role="dialog">
-            <div class="modal-dialog modal-lg">
-
+            <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
@@ -120,7 +114,7 @@
                         <h4 class="modal-title">Food Finder</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="container" id="foodModalInfoDiv">
+                        <div id="foodModalInfoDiv">
                             <h2>Please Enter Your Location</h2>
                             <form class="form-group">
                                 <input type="text" id="locationInput" class="form-control" placeholder="Please Enter Your Address or City">

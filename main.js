@@ -534,7 +534,6 @@ function applyClickHandlers()
     //     $('#drinkModal').modal('show');
     // });
     drinkAjaxCall();
-
 }
 
 $(document).ready(applyClickHandlers);
