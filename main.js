@@ -200,7 +200,7 @@ function appendMedia () {
 }
 
 /**
- * @function - Automagically invoked by YT API. Acts as a callback for when the YT iFrame's ready.
+ * @function - Automatically invoked by YT API. Acts as a callback for when the YT iFrame's ready.
  * @name - attachDrinkToDom
  */
 function onYouTubeIframeAPIReady()
@@ -209,7 +209,7 @@ function onYouTubeIframeAPIReady()
         height: '390',
         width: '640',
         // Set the id of the video to be played
-        videoId: 'Pukw8Ovl6Tc',
+        videoId: 'OpLK_7OL-LE',
         // Setup event handlers
         events: {
             'onError': onError
@@ -496,11 +496,13 @@ function applyClickHandlers()
     });
 
     $('#mediaModal').on('hidden.bs.modal', function () {
-        $("#mediaModalBody").empty();
+        mediaDivArr= [];
+        mediaIDVideo = "";
+        $('.yt-player-container').toggleClass('hidden_vid');
     });
-    // $('#mood-container').on('hidden.bs.modal', function () {
-    //     $("").removeClass('selected');
-    // });
+    $('#mood-container').on('hidden.bs.modal', function () {
+        $("label").removeClass('selected');
+    });
 
     resetApp();
     // $('#google-icon').on('click', function() {
