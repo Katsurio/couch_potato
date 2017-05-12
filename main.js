@@ -179,19 +179,17 @@ function appendMedia () {
  * @name - attachDrinkToDom
  */
 function attachDrinkToDom() {
-    var randomDrinkDiv = $('<div>').addClass('container thumbnail').css({'text-align': 'center'});
+    // var randomDrinkDiv = $('<div>').addClass('container thumbnail').css({'text-align': 'center'});
     var drinkImageImg = $('<img>').attr('src', drinkImage).css({'height': '35vmin', 'width': '35vmin'});
     var captionDiv = $('<div>').addClass('caption');
-    var drinkNameH1 = $('<h1>').text(drinkName);
+    var drinkNameH3 = $('<h3>').text(drinkName);
     var howToMakeH3 = $('<h3>').text('How to make the drink:').css({'line-height': '3', 'font-weight': '500'});
     var drinkInstructionsH4 = $('<h4>').text(instructions);
     var drinkIngredientsH3 = $('<h3>').text('What you\'ll need:').css({'line-height': '3', 'font-weight': '500'});
 
-    $('body').append(randomDrinkDiv);
-    $(randomDrinkDiv)
-        .append(drinkImageImg)
+    $('#drinkModalInfoDiv').append(drinkImageImg)
         .append(captionDiv)
-        .append(drinkNameH1)
+        .append(drinkNameH3)
         .append(howToMakeH3)
         .append(drinkInstructionsH4)
         .append(drinkIngredientsH3);
@@ -203,7 +201,7 @@ function attachDrinkToDom() {
         } else {
             newIngredientH4.text(ingredientMeasures[i] + " " + drinkIngredients[i]);
         }
-        $(randomDrinkDiv).append(newIngredientH4);
+        $('#drinkModalInfoDiv').append(newIngredientH4);
     }
 }
 
@@ -240,10 +238,25 @@ function createModalFormButtons ()
         $('.mood-group-container').append(input_radio, label);
     }
     $('.mood-group-container input:radio').addClass('hidden');
-    $('.mood-group-container label').click(function(){
-        $(this).addClass('selected').siblings().removeClass('selected');
-    });
+}
 
+
+var _1stClicked = null,
+    _2ndClicked = null;
+function selectMoodClickHandler () {
+    if(_1stClicked !== null && _2ndClicked === null)
+    {
+        _2ndClicked = $(this).addClass('selected');
+        $(_1stClicked).removeClass('selected');
+        _1stClicked = null;
+    } else if (_2ndClicked !== null && _1stClicked === null) {
+        _1stClicked = $(this).addClass('selected');
+        $(_2ndClicked).removeClass('selected');
+        _2ndClicked = null;
+    } else {
+        _1stClicked = $(this);
+        _1stClicked.addClass('selected');
+    }
 }
 
 //Google Places API
@@ -356,7 +369,7 @@ function attachRestaurantsToDom() {
     var restaurantNameH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].name);
     var restaurantAddressH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].address);
     var restaurantPhoneH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].phone);
-    var restaurantLinkAnchor = $('<a>').attr('href', restaurantResults[restaurantResults.length-1].link);
+    var restaurantLinkAnchor = $('<a>').attr({'href': restaurantResults[restaurantResults.length-1].link, 'target': '_blank'});
     var restaurantLinkImg = $('<img src="images/googleMaps.png">').css({'height': '10vmin','width': '10vmin'});
 
     $('#foodModalInfoDiv').append(restaurantNameH3)
@@ -377,6 +390,8 @@ function locationSubmitBtn() {
         if(keyPressed === 13) {
             e.preventDefault();
             userLocation = $('#locationInput').val();
+            $('#foodModalInfoDiv > h3').empty();
+            $('#foodModalInfoDiv > a').empty();
             restaurantAjaxCall();
             $('#locationInput').val('');
         }
@@ -396,13 +411,18 @@ function applyClickHandlers()
     $("#myModal").modal('show');
     createModalFormButtons();
     locationSubmitBtn();
+    $('.mood-group-container label').click(selectMoodClickHandler);
     $('.submitBtn').click(moodSubmitClick);
     $('.submitBtn').click(popupClickHandler);
     $('#pug').on('click', popupClickHandler);
     $('#google-icon').on('click', function() {
-       $('#foodModal').modal('show');
+        $('#foodModal').modal('show');
     });
     $('.trailerBtn').click(onPlayerReady);
+    // $('#google-icon').on('click', function() {
+    //     $('#drinkModal').modal('show');
+    // });
+    drinkAjaxCall();
 
 }
 
