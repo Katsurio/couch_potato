@@ -172,8 +172,9 @@ function appendMedia () {
     var mediaDateDiv = $('<div>').addClass('dateDiv').text(mediaDate);
     var mediaDescrDiv = $('<div>').addClass('descrDiv').text(mediaDescr);
     var mediaGenreDiv = $('<div>').addClass('genreDiv').text(mediaGenre);
-    var mediaDiv = $('<div>').append(mediaTitleDiv, mediaDateDiv,  mediaGenreDiv, mediaDescrDiv, mediaPosterDiv);
-    $('.media-container').append(mediaDiv);
+    var trailerBtn = $('<button type="button" class="btn btn-primary">Play Trailer</button>');
+    var mediaDiv = $('<div>').append(mediaTitleDiv, mediaDateDiv,  mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
+    $('.mediaModalBody').append(mediaDiv);
 }
 
 /** @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
@@ -379,6 +380,9 @@ function locationSubmitBtn() {
 function moodSubmitClick (){
     TMDBajax(mood);
 }
+function popupClickHandler(){
+    $('.popup').toggle();
+}
 
 function applyClickHandlers()
 {
@@ -386,6 +390,8 @@ function applyClickHandlers()
     createModalFormButtons();
     locationSubmitBtn();
     $('.submitBtn').click(moodSubmitClick);
+    $('.submitBtn').click(popupClickHandler);
+    $('#pug').on('click', popupClickHandler);
 }
 
 $(document).ready(applyClickHandlers);
