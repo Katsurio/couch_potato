@@ -199,7 +199,7 @@ function appendMedia () {
 }
 
 /**
- * @function - Automagically invoked by YT API. Acts as a callback for when the YT iFrame's ready.
+ * @function - Automatically invoked by YT API. Acts as a callback for when the YT iFrame's ready.
  * @name - attachDrinkToDom
  */
 function onYouTubeIframeAPIReady()
@@ -208,7 +208,7 @@ function onYouTubeIframeAPIReady()
         height: '390',
         width: '640',
         // Set the id of the video to be played
-        videoId: 'Pukw8Ovl6Tc',
+        videoId: 'OpLK_7OL-LE',
         // Setup event handlers
         events: {
             'onError': onError
@@ -234,11 +234,12 @@ function onError(error)
 function showAndPlayYtVid()
 {
     $(mediaDiv).empty();
-    console.log("Line 206: function showAndPlayYtVid() invoked");
     $('.yt-player-container').toggleClass('hidden_vid');
     player.loadVideoById(mediaIDVideo);
 }
-
+function removeMediaIDVideo() {
+      player.stopVideo();
+}
 /**
  * @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
  * @name - attachDrinkToDom
@@ -500,11 +501,15 @@ function applyClickHandlers()
     });
 
     $('#mediaModal').on('hidden.bs.modal', function () {
-        $("#mediaModalBody").empty();
+        mediaDivArr= [];
+        mediaIDVideo = "";
+        $('.yt-player-container').toggleClass('hidden_vid');
+        console.log('mediaModal');
+        removeMediaIDVideo();
     });
-    // $('#mood-container').on('hidden.bs.modal', function () {
-    //     $("").removeClass('selected');
-    // });
+    $('#mood-container').on('hidden.bs.modal', function () {
+        $("label").removeClass('selected');
+    });
     resetApp();
     drinkAjaxCall();
 }
