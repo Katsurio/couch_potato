@@ -170,18 +170,17 @@ function appendMedia () {
     var mediaDescrDiv = $('<div>').addClass('descrDiv').text(mediaDescr);
     var mediaGenreDiv = $('<div>').addClass('genreDiv').text(mediaGenre);
     var trailerBtn = $('<button type="button" class="btn btn-primary trailerBtn"><span class="glyphicon glyphicon-play"></span>  Play Trailer</button>');
-    var mediaDiv = $('<div>').append(mediaTitleDiv, mediaDateDiv,  mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
+    var mediaDiv = $('<div>').append(mediaTitleDiv, mediaDateDiv, mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
     $('.mediaModalBody').append(mediaDiv);
     $('.trailerBtn').click(onPlayerReady);
     $('.trailerBtn').on('click', function () {
         $('.yt-player-container').toggleClass('hidden_vid');
     });
-
-    $('#mediaModal .close').on('click', function (){
-        $('#pug').addClass('tada');
-});
+    //
+    // $('#mediaModal .close').on('click', function () {
+    //     $('#pug').addClass('tada');
+    // });
 }
-
 /** @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
  * @name - attachDrinkToDom
  */
