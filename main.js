@@ -368,7 +368,6 @@ function applyClickHandlers()
 {
     $("#myModal").modal('show');
     createModalFormButtons();
-    locationSubmitBtn();
     $('.mood-group-container label').click(selectMoodClickHandler);
     $('.submitBtn').click(moodSubmitClick).click(popupClickHandler);
     $('#pug').on('click', popupClickHandler);
