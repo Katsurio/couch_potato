@@ -53,7 +53,10 @@ var globalResult,
     {"id": 37, "name": "Western"}
 ],
 // Youtube API variables
-    player;
+    player,
+// Mood select check variables
+    _1stClicked = null,
+    _2ndClicked = null;
 
 /**
  * @function - Initiates an AJAX call to CocktailDB for a random drink
