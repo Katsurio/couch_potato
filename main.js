@@ -502,8 +502,8 @@ function applyClickHandlers()
         mediaDivArr= [];
         mediaIDVideo = "";
         $('.yt-player-container').toggleClass('hidden_vid');
-        console.log('mediaModal');
         removeMediaIDVideo();
+        $('#google-icon').addClass('tada');
     });
     $('#mood-container').on('hidden.bs.modal', function () {
         $("label").removeClass('selected');
