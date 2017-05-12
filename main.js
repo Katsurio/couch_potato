@@ -301,9 +301,9 @@ function createModalFormButtons ()
  */
 function selectMoodClickHandler ()
 {
-    $('.mood-group-container label').click(function(){
+    // $('.mood-group-container label').click(function(){
         $(this).addClass('selected').siblings().removeClass('selected');
-    });
+    // });
     $("#google-icon").show();
 }
 

@@ -31,10 +31,6 @@ body {
     font-family: Helvetica, sans-serif;
 }
 
-#food-modal {
-    max-height: 750px;
-}
-
 #pug {
     position: fixed;
     top: 370px;
@@ -172,6 +168,8 @@ body {
     40%, 60%, 80% {transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);}
     to {transform: scale3d(1, 1, 1);}
 }
+
+
 #pug {
     animation-name: tada;
 }
