@@ -6,7 +6,6 @@
  * @param {String} cardBackImg - A strings that contains the path to the cards' back image.
  * @param {String[]} cardFaceImgs - An array of strings that contain the paths to the card faces' images.
  */
-
 // Booze API Call
 var globalResult;
 var drinkName = null;
@@ -174,6 +173,13 @@ function appendMedia () {
     var mediaDiv = $('<div>').append(mediaTitleDiv, mediaDateDiv,  mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
     $('.mediaModalBody').append(mediaDiv);
     $('.trailerBtn').click(onPlayerReady);
+    $('.trailerBtn').on('click', function () {
+        $('.yt-player-container').toggleClass('hidden_vid');
+    });
+
+    $('#mediaModal .close').on('click', function (){
+        $('#pug').addClass('tada');
+});
 }
 
 /** @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
