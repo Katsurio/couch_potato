@@ -103,7 +103,8 @@ function drinkAjaxCall() {
  * @name - mediaMood
  */
 function mediaMood() {
-    switch($('input[name=radOption]:checked').val()) {
+    var pugtato = $("label[class=selected]")[0].htmlFor;
+    switch(pugtato) {
         case 'Happy':
             mood = 35;
             break;
@@ -143,12 +144,12 @@ function TMDBajax () {
     mediaMood();
     $.ajax({
         dataType: 'json',
-        url: "https://api.themoviedb.org/3/discover/movie?with_genres=" + mood + "&sort_by=popularity.desc&vote_count.gte=10&primary_release_date.gte=1927-09-15&primary_release_date.lte=2017-2-23&api_key=" + apiKeys.TMDB,
+        url: "https://api.themoviedb.org/3/discover/movie?with_genres=" + mood + "&sort_by=popularity.desc&primary_release_date.gte=1927-09-15&primary_release_date.lte=2017-2-23&api_key=" + apiKeys.TMDB,
         api_key: apiKeys.TMDB,
         type: 'get',
         success: function(result) {
             mediaRes = result;
-            var selectedMedia = Math.floor(Math.random() * 10) + 1;
+            var selectedMedia = Math.floor(Math.random() * 20) + 1;
 
             mediaTitle = mediaRes.results[selectedMedia].title;
             mediaDate = mediaRes.results[selectedMedia].release_date;
@@ -178,6 +179,8 @@ function TMDBajax () {
  * @function - Creates DOM elements and attaches the information pulled from The Movie DB
  * @name - appendMedia
  */
+
+var mediaDivArr = [];
 function appendMedia () {
     mediaDate = "(" + (mediaDate.slice(0, 4)) + ")";
     var mediaPosterDiv = $('<img>').attr('src', TMDBurl + mediaPoster).addClass('posterDiv'),
@@ -185,11 +188,11 @@ function appendMedia () {
         mediaDateDiv = $('<div>').addClass('dateDiv').text(mediaDate),
         mediaDescrDiv = $('<div>').addClass('descrDiv').text(mediaDescr),
         mediaGenreDiv = $('<div>').addClass('genreDiv').text(mediaGenre),
-        trailerBtn = $('<button type="button" class="btn btn-primary trailerBtn"><span class="glyphicon glyphicon-play"></span>  Play Trailer</button>'),
-        mediaDiv = $('<div>').append(mediaTitleDiv, mediaDateDiv, mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
+        trailerBtn = $('<button type="button" class="btn btn-primary trailerBtn"><span class="glyphicon glyphicon-play"></span>  Play Trailer</button>');
+        mediaDivArr.push(mediaTitleDiv, mediaDateDiv, mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
+        mediaDiv = $('<div>').append(mediaDivArr);
     $('.mediaModalBody').append(mediaDiv);
     $('.trailerBtn').click(showAndPlayYtVid);
-
     // $('#mediaModal .close').on('click', function () {
     //     $('#pug').addClass('tada');
     // });
@@ -230,6 +233,7 @@ function onError(error)
  */
 function showAndPlayYtVid()
 {
+    $(mediaDiv).empty();
     console.log("Line 206: function showAndPlayYtVid() invoked");
     $('.yt-player-container').toggleClass('hidden_vid');
     player.loadVideoById(mediaIDVideo);
@@ -244,9 +248,9 @@ function attachDrinkToDom() {
     var drinkImageImg = $('<img>').attr('src', drinkImage).css({'height': '35vmin', 'width': '35vmin'}),
         captionDiv = $('<div>').addClass('caption'),
         drinkNameH3 = $('<h3>').text(drinkName),
-        howToMakeH3 = $('<h3>').text('How to make the drink:').css({'line-height': '3', 'font-weight': '500'}),
+        howToMakeH3 = $('<h4>').text('How to make the drink:').css({'line-height': '3', 'font-weight': '500'}),
         drinkInstructionsH4 = $('<h4>').text(instructions),
-        drinkIngredientsH3 = $('<h3>').text('What you\'ll need:').css({'line-height': '3', 'font-weight': '500'});
+        drinkIngredientsH3 = $('<p>').text('What you\'ll need:').css({'line-height': '3', 'font-weight': '500'});
     $('#drinkModalInfoDiv').append(drinkImageImg, captionDiv, drinkNameH3, howToMakeH3, drinkInstructionsH4, drinkIngredientsH3);
 
     for(var i = 0; i < drinkIngredients.length; i++) {
@@ -295,51 +299,12 @@ function createModalFormButtons ()
  * @function - Ensures that only 1 mood radio button is selected
  * @name - selectMoodClickHandler
  */
-
-// TODO: Fix the bug that prevents reselecting (*click on the same mood multiple times in a row)
 function selectMoodClickHandler ()
 {
-//     if (_1stClicked !== null && _2ndClicked === null)
-//     {
-//         _2ndClicked = $(this).addClass('selected');
-//
-//         if(_1stClicked === _2ndClicked)
-//         {
-//             $(_1stClicked, _2ndClicked).removeClass('selected');
-//             _1stClicked = null;
-//             _2ndClicked = null;
-//         }
-//         else
-//         {
-//             $(_1stClicked).removeClass('selected');
-//             _1stClicked = null;
-//         }
-//     else if (_1stClicked === null && _2ndClicked === null)
-//     {
-//         _1stClicked = $(this).addClass('selected');
-//     }
-//     } else {
-//         _1stClicked = $(this).addClass('selected');
-//         $(_2ndClicked).removeClass('selected');
-//         _2ndClicked = null;
-//         console.warn("#3 esle: _1stClicked="  + _1stClicked + " _2ndClicked="  + _2ndClicked);
-//     }
-
-
-
-    if(_1stClicked !== null && _2ndClicked === null)
-    {
-        _2ndClicked = $(this).addClass('selected');
-        $(_1stClicked).removeClass('selected');
-        _1stClicked = null;
-    } else if (_2ndClicked !== null && _1stClicked === null) {
-        _1stClicked = $(this).addClass('selected');
-        $(_2ndClicked).removeClass('selected');
-        _2ndClicked = null;
-    } else {
-        _1stClicked = $(this);
-        _1stClicked.addClass('selected');
-    }
+    $('.mood-group-container label').click(function(){
+        $(this).addClass('selected').siblings().removeClass('selected');
+    });
+    $("#google-icon").show();
 }
 
 /**
@@ -347,7 +312,9 @@ function selectMoodClickHandler ()
  * @name - foodTypePicker
  */
 function foodTypePicker() {
-    switch($('input[name=radOption]:checked').val()) {
+    var pugtato = $("label[class=selected]")[0].htmlFor;
+    switch(pugtato)
+    {
         case 'Happy':
             emotionKeyword = 'mexican';
             break;
@@ -495,10 +462,9 @@ function resetApp() {
     });
 }
 
-//TODO: Finish JSDoc
 /**
- * @function -
- * @name - locationSubmitBtn
+ * @function - click handler for TMDB Ajax call, passes in mood variable as genre id number
+ * @name - moodSubmitClick
  */
 function moodSubmitClick (){
     TMDBajax(mood);
@@ -532,6 +498,14 @@ function applyClickHandlers()
     $('#dratini-glass').on('click', function() {
         $('#drinkModal').modal('show');
     });
+
+    $('#mediaModal').on('hidden.bs.modal', function () {
+        $("#mediaModalBody").empty();
+    });
+    // $('#mood-container').on('hidden.bs.modal', function () {
+    //     $("").removeClass('selected');
+    // });
+    resetApp();
     drinkAjaxCall();
 }
 

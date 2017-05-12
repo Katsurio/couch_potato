@@ -15,6 +15,7 @@ body {
 #google-icon {
     position: fixed;
     height: 40px;
+    display: none;
     transform: rotate(-6deg);
     left: 30px;
     top: 100px;
@@ -27,22 +28,34 @@ body {
 .modal-body {
     font-size: 20px;
     text-align: center;
-    font-family: Helvetica, sans-serif;;
+    font-family: Helvetica, sans-serif;
+}
+
+#food-modal {
+    max-height: 750px;
+}
+
+#pug {
+    position: fixed;
+    top: 370px;
+    left: 140px;
+    height: 305px;
 }
 
 #pug > img {
-    position: fixed;
-    bottom: 20%;
-    /*transform: rotate(-6deg);*/
+    transform: rotate(-12deg);
+    transition: all 1s;
+    -webkit-transition: all 1s;
+    width: 380px;
+}
 
-    transition:all 1s;
-    -webkit-transition:all 1s;
+#dratini-glass {
+    position: fixed;
+    bottom: 270px;
+    right: 500px;
 }
 
 #dratini-glass > img {
-    position: absolute;
-    bottom: 167px;
-    right: 408px;
     width: 55px;
 }
 
@@ -149,7 +162,7 @@ body {
     display: inline-block;
 }
 #pug:hover{
-cursor:pointer;
+    cursor:pointer;
 }
 
 @keyframes tada {
@@ -162,7 +175,6 @@ cursor:pointer;
 #pug {
     animation-name: tada;
 }
-
 
 #locationInput {
     display: inline-block;
@@ -230,7 +242,23 @@ cursor:pointer;
         width: 100vh;
         height: 100vh;
     }
-  
-.hidden_vid {
+
+.hidden_vid{
     display: none;
 }
+
+iframe {
+    height: 100%;
+    width: 100%;
+}
+
+.yt-player-container {
+    height: 60vh
+}
+
+#mediaContainer {
+    width: 80%;
+    height: 80%;
+}
+
+
