@@ -235,11 +235,12 @@ function onError(error)
 function showAndPlayYtVid()
 {
     $(mediaDiv).empty();
-    console.log("Line 206: function showAndPlayYtVid() invoked");
     $('.yt-player-container').toggleClass('hidden_vid');
     player.loadVideoById(mediaIDVideo);
 }
-
+function removeMediaIDVideo() {
+      player.stopVideo();
+}
 /**
  * @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
  * @name - attachDrinkToDom
@@ -499,6 +500,8 @@ function applyClickHandlers()
         mediaDivArr= [];
         mediaIDVideo = "";
         $('.yt-player-container').toggleClass('hidden_vid');
+        console.log('mediaModal');
+        removeMediaIDVideo();
     });
     $('#mood-container').on('hidden.bs.modal', function () {
         $("label").removeClass('selected');
