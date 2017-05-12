@@ -25,6 +25,7 @@ body {
     bottom: 20%;
     transform: rotate(-6deg);
     animation-name: jello;
+    animation-duration: 10s;
     transform-origin: center;
 
     transition:all 1s;
@@ -102,8 +103,8 @@ body {
     height: 40vw;
     width: 40vw;
 
-
     transition:all 1s;
+    display: none;
 }
 .popup p {
     font-family: happyCamper, Helvetica, sans-serif;
@@ -167,3 +168,38 @@ cursor:pointer;
     width: 13vw;
 }
 
+.mediaContainer {
+    background-color: white;
+    font-family: Franklin Gothic Book, sans-serif;
+    border-radius: 20px;
+    top: 50%;
+    display: inline-block;
+}
+.titleDiv {
+    font-size: 2em;
+    font-weight: bold;
+    display: inline-block;
+}
+.dateDiv {
+    display: inline-block;
+}
+
+.posterDiv{
+    height: 90%;
+    display: inline-block;
+
+}
+.genreDiv {
+    display: inline-block;
+
+}
+.descrDiv {
+    display: inline-block;
+}
+#foodModal {
+    font-family: happyCamper, Helvetica, sans-serif;
+}
+
+#drinkModalInfoDiv {
+    width: 100%;
+}
