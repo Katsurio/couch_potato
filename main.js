@@ -183,7 +183,8 @@ function appendMedia () {
         mediaDescrDiv = $('<div>').addClass('descrDiv').text(mediaDescr),
         mediaGenreDiv = $('<div>').addClass('genreDiv').text(mediaGenre),
         trailerBtn = $('<button type="button" class="btn btn-primary trailerBtn"><span class="glyphicon glyphicon-play"></span>  Play Trailer</button>');
-        mediaDivArr.push(mediaTitleDiv, mediaDateDiv, mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
+        $(mediaDescrDiv).append(trailerBtn);
+        mediaDivArr.push(mediaTitleDiv, mediaDateDiv, mediaGenreDiv, mediaPosterDiv, mediaDescrDiv);
         mediaDiv = $('<div>').append(mediaDivArr);
     $('.mediaModalBody').append(mediaDiv);
     $('.trailerBtn').click(showAndPlayYtVid);
@@ -296,47 +297,158 @@ function createModalFormButtons ()
  */
 function selectMoodClickHandler ()
 {
-    if(_1stClicked !== null && _2ndClicked === null)
+    $(this).addClass('selected').siblings().removeClass('selected');
+    $("#google-icon").show();
+}
+
+   /**
+ * @function - Pulls data from the Emoji modal to pass into the Google Places query string
+ * @name - foodTypePicker
+ */
+function foodTypePicker() {
+    var pugtato = $("label[class=selected]")[0].htmlFor;
+    switch(pugtato)
     {
-        _2ndClicked = $(this).addClass('selected');
-        if(_1stClicked === _2ndClicked)
-        {
-            $(_1stClicked).removeClass('selected');
-            _$(_2ndClicked).removeClass('selected');
-            _1stClicked = null;
-            _2ndClicked = null;
-        }
-        else
-        {
-            $(_1stClicked).removeClass('selected');
-            _1stClicked = null;
-        }
-    }
-    else if (_2ndClicked !== null && _1stClicked === null)
-    {
-        _1stClicked = $(this).addClass('selected');
-        if(_2ndClicked === _1stClicked)
-        {
-            $(_2ndClicked).removeClass('selected');
-            _$(_1stClicked).removeClass('selected');
-            _1stClicked = null;
-            _2ndClicked = null;
-        }
-        else
-        {
-            $(_2ndClicked).removeClass('selected');
-            _2ndClicked = null;
-        }
-        _1stClicked = $(this).addClass('selected');
-        $(_2ndClicked).removeClass('selected');
-        _2ndClicked = null;
-    }
-    else
-    {
-        _1stClicked = $(this).addClass('selected');
+        case 'Happy':
+            emotionKeyword = 'mexican';
+            break;
+        case 'Sad':
+            emotionKeyword = 'chinese';
+            break;
+        case 'Angry':
+            emotionKeyword = 'thai';
+            break;
+        case 'Poo':
+            emotionKeyword = 'fast food';
+            break;
+        case 'Tired':
+            emotionKeyword = 'pizza';
+            break;
+        case 'Unicorny':
+            emotionKeyword = 'italian';
+            break;
+        case 'Goofy':
+            emotionKeyword = 'desserts';
+            break;
+        case 'Scared':
+            emotionKeyword = 'korean';
+            break;
+        default:
+            emotionKeyword = '';
+            break;
     }
 }
 
+/**
+ * @function - Initiates a series of AJAX calls to Google Places for the top three restaurant around the user that is currently open and delivers
+ * @name - restaurantAjaxCall
+ */
+function restaurantAjaxCall() {
+    var userLongLatUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + userLocation + '&key=' + apiKeys.googlePlace;
+    $.ajax({
+        dataType: 'json',
+        url: userLongLatUrl,
+        api_key: apiKeys.googlePlace,
+        type: 'get',
+        success: function(result) {
+            console.log('LongLat Success!!!');
+            foodTypePicker();
+            userLongLat = result.results[0].geometry.location.lat + "," + result.results[0].geometry.location.lng;
+            var newGooglePlacesUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLongLat + '&radius=3000&opennow&keyword=restaurant, ' + emotionKeyword + ', delivery, takeout&key=' + apiKeys.googlePlace;
+            $.ajax({
+                dataType: 'json',
+                url: newGooglePlacesUrl,
+                api_key: apiKeys.googlePlace,
+                type: 'get',
+                success: function(result) {
+                    console.log('Google Places Success!!!');
+                    restaurantLoopList = result;
+                    for(var i = 0; i < 3; i++) {
+                        var googlePlaceId = restaurantLoopList.results[i].place_id;
+                        var newGooglePlaceId = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + googlePlaceId + '&key=' + apiKeys.googlePlace;
+                        $.ajax({
+                            dataType: 'json',
+                            url: newGooglePlaceId,
+                            api_key: apiKeys.googlePlace,
+                            type: 'get',
+                            success: function(result) {
+                                restaurantFinalId = result;
+                                var restaurantInfo = {
+                                    name: restaurantFinalId.result.name,
+                                    address: restaurantFinalId.result.formatted_address,
+                                    phone: restaurantFinalId.result.formatted_phone_number,
+                                    link: restaurantFinalId.result.url
+                                };
+                                restaurantResults.push(restaurantInfo);
+                                console.log('Google PlaceID Success!');
+                                attachRestaurantsToDom();
+                            },
+                            error: function() {
+                                console.log('Google PlaceID fail')
+                            }
+                        })
+                    }
+                },
+                error: function() {
+                    console.log('Google Fail')
+                }
+            });
+        },
+        error: function() {
+            console.log('LongLat Fail!!!');
+        }
+    });
+}
+
+/**
+ * @function - Creates DOM elements and attaches the information pulled from Google Places to them
+ * @name - attachRestaurantsToDom
+ */
+function attachRestaurantsToDom() {
+    var restaurantNameH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].name),
+        restaurantAddressH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].address),
+        restaurantPhoneH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].phone),
+        restaurantLinkAnchor = $('<a>').attr({'href': restaurantResults[restaurantResults.length-1].link, 'target': '_blank'}),
+        restaurantLinkImg = $('<img src="images/googleMaps.png">').css({'height': '10vmin','width': '10vmin'});
+
+    $('#foodModalInfoDiv').append(restaurantNameH3, restaurantAddressH3, restaurantPhoneH3, restaurantLinkAnchor);
+    $(restaurantLinkAnchor).append(restaurantLinkImg);
+}
+
+//TODO: Finish JSDoc
+/**
+ * @function -
+ * @name - locationSubmitBtn
+ */
+function locationSubmitBtn() {
+    $('#locationSubmitBtn').on('click', function() {
+        userLocation = $('#locationInput').val();
+        console.log(userLocation);
+        if(userLocation === "dandalf") {
+            window.open("https://www.youtube.com/watch?v=ZRJfrwnvbCs");
+            $('#locationInput').val('');
+            return;
+        }
+        restaurantAjaxCall();
+        $('#locationInput').val('');
+    });
+    $('#locationInput').on('keypress', function(e) {
+        var keyPressed = e.charCode;
+        if(keyPressed === 13) {
+            e.preventDefault();
+            userLocation = $('#locationInput').val();
+            if(userLocation === "dandalf") {
+                window.open("https://www.youtube.com/watch?v=ZRJfrwnvbCs");
+                $('#locationInput').val('');
+                return;
+            }
+            $('#foodModalInfoDiv > h3').empty();
+            $('#foodModalInfoDiv > a').empty();
+            restaurantAjaxCall();
+            $('#locationInput').val('');
+        }
+    });
+}
 function resetApp() {
     $("#reset").click(function () {
         window.location.reload();
@@ -351,9 +463,9 @@ function moodSubmitClick (){
     TMDBajax(mood);
 }
 
-//TODO: Finish JSDoc
+
 /**
- * @function -
+ * @function - takes class of hidden off of popup speech bubble
  * @name - popupClickHandler
  */
 function popupClickHandler(){
@@ -376,7 +488,6 @@ function applyClickHandlers()
     $('#dratini-glass').on('click', function() {
         $('#drinkModal').modal('show');
     });
-
     $('#mediaModal').on('hidden.bs.modal', function () {
         mediaDivArr= [];
         mediaIDVideo = "";

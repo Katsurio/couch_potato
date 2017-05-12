@@ -172,8 +172,10 @@ body {
     40%, 60%, 80% {transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);}
     to {transform: scale3d(1, 1, 1);}
 }
-#pug {
+
+.tada {
     animation-name: tada;
+    animation-duration: 10s;
 }
 
 #locationInput {
@@ -181,34 +183,6 @@ body {
     width: 13vw;
 }
 
-.mediaContainer {
-    background-color: white;
-    font-family: Franklin Gothic Book, sans-serif;
-    border-radius: 20px;
-    top: 50%;
-    display: inline-block;
-}
-.titleDiv {
-    font-size: 2em;
-    font-weight: bold;
-    display: inline-block;
-}
-.dateDiv {
-    display: inline-block;
-}
-
-.posterDiv{
-    height: 90%;
-    display: inline-block;
-
-}
-.genreDiv {
-    display: inline-block;
-
-}
-.descrDiv {
-    display: inline-block;
-}
 #foodModal {
     font-family: happyCamper, Helvetica, sans-serif;
 }
@@ -242,7 +216,7 @@ body {
         width: 100vh;
         height: 100vh;
     }
-
+}
 .hidden_vid{
     display: none;
 }
@@ -260,5 +234,47 @@ iframe {
     width: 80%;
     height: 80%;
 }
+.titleDiv {
+    font-family: Helvetica, sans-serif;
+    font-size: 1.8em;
+    font-weight: bold;
+    display: inline-block;
+    margin: 5px;
+}
+.dateDiv {
+    display: inline-block;
+    font-size: 1.5em;
+}
 
+.posterDiv{
+    height: 50%;
+    width: 40%;
+    display: inline-block;
+    position: relative;
+    margin: 0 auto;
+}
+.genreDiv {
+    display: block;
+    margin: 2% 0;
+    font-size: 1.5em;
+}
+.descrDiv {
+    display: inline-block;
+    position: relative;
+    width: 50%;
+    font-size: 0.9em;
+    text-align: center;
+    padding: 5% 1%;
+}
+.trailerBtn {
+    position: relative;
+    display: block;
+    margin: 10%;
+}
 
+#pug > #clickme {
+    display: block;
+    width: 25%;
+    transform: rotate(-46deg);
+    padding: 0;
+}
