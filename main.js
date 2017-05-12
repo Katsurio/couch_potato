@@ -143,12 +143,12 @@ function TMDBajax () {
     mediaMood();
     $.ajax({
         dataType: 'json',
-        url: "https://api.themoviedb.org/3/discover/movie?with_genres=" + mood + "&sort_by=popularity.desc&vote_count.gte=10&primary_release_date.gte=1927-09-15&primary_release_date.lte=2017-2-23&api_key=" + apiKeys.TMDB,
+        url: "https://api.themoviedb.org/3/discover/movie?with_genres=" + mood + "&sort_by=popularity.desc&primary_release_date.gte=1927-09-15&primary_release_date.lte=2017-2-23&api_key=" + apiKeys.TMDB,
         api_key: apiKeys.TMDB,
         type: 'get',
         success: function(result) {
             mediaRes = result;
-            var selectedMedia = Math.floor(Math.random() * 10) + 1;
+            var selectedMedia = Math.floor(Math.random() * 20) + 1;
 
             mediaTitle = mediaRes.results[selectedMedia].title;
             mediaDate = mediaRes.results[selectedMedia].release_date;
@@ -514,8 +514,9 @@ function applyClickHandlers()
     $('#google-icon').on('click', function() {
         $('#foodModal').modal('show');
     });
-    $('.mediaContainer').on('hidden.bs.modal', function () {
-        $('.mediaModalBody').empty();
+    $('#mediaContainer').on('hidden.bs.modal', function () {
+        $(this).find("#mediaModalBody").val('');
+
     });
     // $('#google-icon').on('click', function() {
     //     $('#drinkModal').modal('show');
