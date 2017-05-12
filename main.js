@@ -57,6 +57,7 @@ function drinkAjaxCall() {
 // loop through each object in the array and find the corresponding id, return lookup table/array
 
 var mediaRes;
+var mood = '';
 var mediaTitle = null;
 var mediaDate = null;
 var mediaPoster = null;
@@ -87,10 +88,44 @@ var mediaGenreKey = [
     {"id": 37, "name": "Western"}
 ];
 
-function TMDBajax (genre) {
+function mediaMood() {
+    switch($('input[name=radOption]:checked').val()) {
+        case 'Happy':
+            mood = 35;
+            break;
+        case 'Sad':
+            mood = 18;
+            break;
+        case 'Angry':
+            mood = 28;
+            break;
+        case 'Poo':
+            mood = 10770;
+            break;
+        case 'Tired':
+            mood = 99;
+            break;
+        case 'Unicorny':
+            mood = 10749;
+            break;
+        case 'Goofy':
+            mood = 12;
+            break;
+        case 'Scared':
+            mood = 27;
+            break;
+        default:
+            mood = '';
+            break;
+    }
+}
+
+
+function TMDBajax () {
+    mediaMood();
     $.ajax({
         dataType: 'json',
-        url: "https://api.themoviedb.org/3/discover/movie?with_genres=" + genre + "&sort_by=popularity.desc&vote_count.gte=10&primary_release_date.gte=1927-09-15&primary_release_date.lte=2017-2-23&api_key=" + apiKeys.TMDB,
+        url: "https://api.themoviedb.org/3/discover/movie?with_genres=" + mood + "&sort_by=popularity.desc&vote_count.gte=10&primary_release_date.gte=1927-09-15&primary_release_date.lte=2017-2-23&api_key=" + apiKeys.TMDB,
         api_key: apiKeys.TMDB,
         type: 'get',
         success: function(result) {
@@ -104,7 +139,7 @@ function TMDBajax (genre) {
             mediaID = mediaRes.results[selectedMedia].id;
 
             for(var i = 0; i < mediaGenreKey.length; i++){
-                if(mediaGenreKey[i]['id'] === genre){
+                if(mediaGenreKey[i]['id'] === mood){
                     mediaGenre = mediaGenreKey[i]['name'];
                 }
             }
@@ -116,7 +151,7 @@ function TMDBajax (genre) {
                 success: function (res) {
                     mediaIDVideo = res.results[0]['key'];
                     console.log(mediaIDVideo);
-                    onPlayerReady();
+                    // onPlayerReady();
                 }
             });
             appendMedia();
@@ -125,16 +160,21 @@ function TMDBajax (genre) {
     });
 
 }
-console.log(mediaIDVideo);
 
 /** @function - Creates DOM elements and attaches the information pulled from The Movie DB
  * @name - appendMedia
  */
 function appendMedia () {
+    mediaDate = "(" + (mediaDate.slice(0, 4)) + ")";
 
-    var mediaUrl = $('<img>').attr('src', TMDBurl + mediaPoster);
-    var mediaDiv = $('<div>').append(mediaTitle, mediaDate, mediaDescr, mediaUrl, mediaGenre);
-    $('body').append(mediaDiv);
+    var mediaPosterDiv = $('<img>').attr('src', TMDBurl + mediaPoster).addClass('posterDiv');
+    var mediaTitleDiv = $('<div>').addClass('titleDiv').text(mediaTitle);
+    var mediaDateDiv = $('<div>').addClass('dateDiv').text(mediaDate);
+    var mediaDescrDiv = $('<div>').addClass('descrDiv').text(mediaDescr);
+    var mediaGenreDiv = $('<div>').addClass('genreDiv').text(mediaGenre);
+    var trailerBtn = $('<button type="button" class="btn btn-primary">Play Trailer</button>');
+    var mediaDiv = $('<div>').append(mediaTitleDiv, mediaDateDiv,  mediaGenreDiv, mediaDescrDiv, mediaPosterDiv, trailerBtn);
+    $('.mediaModalBody').append(mediaDiv);
 }
 
 /** @function - Creates DOM elements and attaches the information pulled from CocktailDB to them
@@ -203,6 +243,7 @@ function createModalFormButtons ()
     $('.mood-group-container label').click(function(){
         $(this).addClass('selected').siblings().removeClass('selected');
     });
+
 }
 
 //Google Places API
@@ -344,11 +385,21 @@ function locationSubmitBtn() {
     });
 }
 
+function moodSubmitClick (){
+    TMDBajax(mood);
+}
+function popupClickHandler(){
+    $('.popup').toggle();
+}
+
 function applyClickHandlers()
 {
     $("#myModal").modal('show');
     createModalFormButtons();
     locationSubmitBtn();
+    $('.submitBtn').click(moodSubmitClick);
+    $('.submitBtn').click(popupClickHandler);
+    $('#pug').on('click', popupClickHandler);
     $('#google-icon').on('click', function() {
         $('#foodModal').modal('show');
     });
@@ -356,6 +407,7 @@ function applyClickHandlers()
     //     $('#drinkModal').modal('show');
     // });
     drinkAjaxCall();
+
 }
 
 $(document).ready(applyClickHandlers);
