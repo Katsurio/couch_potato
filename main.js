@@ -54,10 +54,7 @@ var globalResult,
 ],
 // Youtube API variables
     player,
-// Mood select check variables
-    _1stClicked = null,
-    _2ndClicked = null,
-//Google Places API ariables
+// google places
     userLocation = null,
     emotionKeyword = '',
     userLongLat = null,
@@ -72,14 +69,15 @@ var globalResult,
 function drinkAjaxCall() {
     $.ajax({
         dataType: 'json',
-        url: 'http://www.thecocktaildb.com/api/json/v1/' + apiKeys.cocktailDb + '/random.php',
+        url: 'https://www.thecocktaildb.com/api/json/v1/' + apiKeys.cocktailDb + '/random.php',
         type: 'get',
         success: function(result) {
             console.log('CocktailDB AJAX Call Success!!!');
             globalResult = result;
             drinkName = globalResult.drinks[0].strDrink;
             instructions = globalResult.drinks[0].strInstructions;
-            drinkImage = globalResult.drinks[0].strDrinkThumb;
+            initialDrinkImage = globalResult.drinks[0].strDrinkThumb;
+            drinkImage = 'https' + initialDrinkImage.slice(4);
             drinkIngredients = [];
             ingredientMeasures = [];
 
@@ -179,7 +177,6 @@ function TMDBajax () {
  * @function - Creates DOM elements and attaches the information pulled from The Movie DB
  * @name - appendMedia
  */
-
 var mediaDivArr = [];
 function appendMedia () {
     mediaDate = "(" + (mediaDate.slice(0, 4)) + ")";
@@ -307,10 +304,10 @@ function selectMoodClickHandler ()
     $("#google-icon").show();
 }
 
-/**
- * @function - Pulls data from the Emoji modal to pass into the Google Places query string
- * @name - foodTypePicker
- */
+/*
+* @function - Pulls data from the Emoji modal to pass into the Google Places query string
+* @name - foodTypePicker
+*/
 function foodTypePicker() {
     var pugtato = $("label[class=selected]")[0].htmlFor;
     switch(pugtato)
@@ -344,7 +341,6 @@ function foodTypePicker() {
             break;
     }
 }
-
 /**
  * @function - Initiates a series of AJAX calls to Google Places for the top three restaurant around the user that is currently open and delivers
  * @name - restaurantAjaxCall
@@ -405,7 +401,6 @@ function restaurantAjaxCall() {
         }
     });
 }
-
 /**
  * @function - Creates DOM elements and attaches the information pulled from Google Places to them
  * @name - attachRestaurantsToDom
@@ -416,11 +411,9 @@ function attachRestaurantsToDom() {
         restaurantPhoneH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].phone),
         restaurantLinkAnchor = $('<a>').attr({'href': restaurantResults[restaurantResults.length-1].link, 'target': '_blank'}),
         restaurantLinkImg = $('<img src="images/googleMaps.png">').css({'height': '10vmin','width': '10vmin'});
-
     $('#foodModalInfoDiv').append(restaurantNameH3, restaurantAddressH3, restaurantPhoneH3, restaurantLinkAnchor);
     $(restaurantLinkAnchor).append(restaurantLinkImg);
 }
-
 //TODO: Finish JSDoc
 /**
  * @function -
@@ -470,7 +463,6 @@ function moodSubmitClick (){
     TMDBajax(mood);
 }
 
-
 /**
  * @function - takes class of hidden off of popup speech bubble
  * @name - popupClickHandler
@@ -487,9 +479,10 @@ function applyClickHandlers()
 {
     $("#myModal").modal('show');
     createModalFormButtons();
-    locationSubmitBtn();
+    // locationSubmitBtn();
     $('.mood-group-container label').click(selectMoodClickHandler);
     $('.submitBtn').click(moodSubmitClick).click(popupClickHandler);
+    $("#locationSubmitBtn").click(locationSubmitBtn);
     $('#pug').on('click', popupClickHandler);
     $('#google-icon').on('click', function() {
         $('#foodModal').modal('show');
@@ -505,9 +498,10 @@ function applyClickHandlers()
         removeMediaIDVideo();
         $('#google-icon').addClass('tada');
     });
-    $('#mood-container').on('hidden.bs.modal', function () {
+    $('#foodModal').on('hidden.bs.modal', function () {
         $("label").removeClass('selected');
     });
+    locationSubmitBtn();
     resetApp();
     drinkAjaxCall();
 }
