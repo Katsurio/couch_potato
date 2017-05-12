@@ -302,10 +302,45 @@ function createModalFormButtons ()
  */
 function selectMoodClickHandler ()
 {
-    $('.mood-group-container label').click(function(){
-        $(this).addClass('selected').siblings().removeClass('selected');
-    });
-    $("#google-icon").show();
+    if(_1stClicked !== null && _2ndClicked === null)
+    {
+        _2ndClicked = $(this).addClass('selected');
+        if(_1stClicked === _2ndClicked)
+        {
+            $(_1stClicked).removeClass('selected');
+            _$(_2ndClicked).removeClass('selected');
+            _1stClicked = null;
+            _2ndClicked = null;
+        }
+        else
+        {
+            $(_1stClicked).removeClass('selected');
+            _1stClicked = null;
+        }
+    }
+    else if (_2ndClicked !== null && _1stClicked === null)
+    {
+        _1stClicked = $(this).addClass('selected');
+        if(_2ndClicked === _1stClicked)
+        {
+            $(_2ndClicked).removeClass('selected');
+            _$(_1stClicked).removeClass('selected');
+            _1stClicked = null;
+            _2ndClicked = null;
+        }
+        else
+        {
+            $(_2ndClicked).removeClass('selected');
+            _2ndClicked = null;
+        }
+        _1stClicked = $(this).addClass('selected');
+        $(_2ndClicked).removeClass('selected');
+        _2ndClicked = null;
+    }
+    else
+    {
+        _1stClicked = $(this).addClass('selected');
+    }
 }
 
 /**
