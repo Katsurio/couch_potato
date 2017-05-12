@@ -170,3 +170,7 @@ cursor:pointer;
 #foodModal {
     font-family: happyCamper, Helvetica, sans-serif;
 }
+
+#drinkModalInfoDiv {
+    width: 100%;
+}
