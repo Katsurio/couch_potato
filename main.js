@@ -211,7 +211,13 @@ function attachDrinkToDom() {
 
 function createModalFormButtons ()
 {
-    var i, temp;
+    var i,
+        temp,
+        url,
+        input_radio,
+        img,
+        label,
+        text;
     var moods = [
         ["Happy", "images/happyEmoji.png"],
         ["Sad", "images/sadEmoji.png"],
@@ -225,13 +231,14 @@ function createModalFormButtons ()
     for (i = 0; i < moods.length; i++)
     {
         temp = moods[i];
-        var url = moods[i][1];
-        var input_radio = $("<input type='radio'/>")
+        url = moods[i][1];
+        input_radio = $("<input type='radio'/>")
             .attr("value", temp[0])
             .attr("id", temp[0])
             .attr("name", "radOption");
-        var img = $("<img>").attr('src', url);
-        var label = $('<label>' + temp[0] + '</label>').attr('for', temp[0]).append(img);
+        img = $("<img>").attr('src', url);
+        text = $('<span>').text(temp[0]);
+        label = $('<label>').attr('for', temp[0]).append(img, '<br>', text);
         $('.mood-group-container').append(input_radio, label);
     }
     $('.mood-group-container input:radio').addClass('hidden');
@@ -241,7 +248,7 @@ function createModalFormButtons ()
 
 }
 
-//Google Start
+//Google Places API
 var userLocation = null;
 var emotionKeyword = '';
 var userLongLat = null;
@@ -249,6 +256,9 @@ var restaurantLoopList = null;
 var restaurantFinalId = null;
 var restaurantResults = [];
 
+/** @function - Pulls data from the Emoji modal and puts in a specific query string into the Google Places search string
+ * @name - foodTypePicker
+ */
 function foodTypePicker() {
     switch($('input[name=radOption]:checked').val()) {
         case 'Happy':
@@ -258,7 +268,7 @@ function foodTypePicker() {
             emotionKeyword = 'chinese';
             break;
         case 'Angry':
-            emotionKeyword = 'thai, indian';
+            emotionKeyword = 'thai';
             break;
         case 'Poo':
             emotionKeyword = 'fast food';
@@ -273,7 +283,7 @@ function foodTypePicker() {
             emotionKeyword = 'desserts';
             break;
         case 'Scared':
-            emotionKeyword = 'random';
+            emotionKeyword = 'korean';
             break;
         default:
             emotionKeyword = '';
@@ -295,7 +305,7 @@ function restaurantAjaxCall() {
             console.log('LongLat Success!!!');
             foodTypePicker();
             userLongLat = result.results[0].geometry.location.lat + "," + result.results[0].geometry.location.lng;
-            var newGooglePlacesUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLongLat + '&radius=3000&opennow&keyword=restaurant,' + emotionKeyword + ', delivery, takeout&key=' + apiKeys.googlePlace;
+            var newGooglePlacesUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + userLongLat + '&radius=3000&opennow&keyword=restaurant, ' + emotionKeyword + ', delivery, takeout&key=' + apiKeys.googlePlace;
             $.ajax({
                 dataType: 'json',
                 url: newGooglePlacesUrl,
@@ -345,15 +355,13 @@ function restaurantAjaxCall() {
  * @name - attachRestaurantsToDom
  */
 function attachRestaurantsToDom() {
-    var restaurantDiv = $('<div>').addClass('container thumbnail').css({'text-align': 'center'});
-    var restaurantNameH1 = $('<h1>').text(restaurantResults[restaurantResults.length-1].name);
+    var restaurantNameH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].name);
     var restaurantAddressH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].address);
     var restaurantPhoneH3 = $('<h3>').text(restaurantResults[restaurantResults.length-1].phone);
     var restaurantLinkAnchor = $('<a>').attr('href', restaurantResults[restaurantResults.length-1].link);
     var restaurantLinkImg = $('<img src="images/googleMaps.png">').css({'height': '10vmin','width': '10vmin'});
 
-    $('body').append(restaurantDiv)
-        .append(restaurantNameH1)
+    $('#foodModalInfoDiv').append(restaurantNameH3)
         .append(restaurantAddressH3)
         .append(restaurantPhoneH3)
         .append(restaurantLinkAnchor);
@@ -392,6 +400,10 @@ function applyClickHandlers()
     $('.submitBtn').click(moodSubmitClick);
     $('.submitBtn').click(popupClickHandler);
     $('#pug').on('click', popupClickHandler);
+    $('#google-icon').on('click', function() {
+       $('#foodModal').modal('show');
+    });
+
 }
 
 $(document).ready(applyClickHandlers);

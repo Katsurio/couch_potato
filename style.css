@@ -61,6 +61,11 @@ body {
     align-items: center;
 }
 
+.modal-header > p {
+    text-align: center;
+    font-size: 18px;
+}
+
 .radio {
     display: inline;
 }
@@ -190,4 +195,7 @@ cursor:pointer;
 }
 .descrDiv {
     display: inline-block;
+}
+#foodModal {
+    font-family: happyCamper, Helvetica, sans-serif;
 }
