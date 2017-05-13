@@ -6,61 +6,135 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <link type="text/css" rel="stylesheet" href="style.css">
+    <script src = "https://www.youtube.com/iframe_api"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="config/apiKeys.js"></script>
     <script type="text/javascript" src="main.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Po-tah-to</a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Couch Po-tah-to</a>
         </div>
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <!--<li><a href="#">Link</a></li>-->
-            <!--<li><a href="#">Link</a></li>-->
-        </ul>
-        <button type="button" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#settingsModal">Get Started</button>
+        <div class="collapse navbar-collapse" id="navBar">
+            <ul class="nav navbar-nav navbar-right">
+                <button class="btn btn-danger navbar-btn" id="reset">Start Over</button>
+            </ul>
+        </div>
     </div>
 </nav>
-<div id="google-icon">
-    <img src="googleMaps.png">
-</div>
-<div class="container">
-    <!-- Modal -->
-    <div class="modal fade" id="settingsModal" role="dialog">
-        <div class="modal-dialog modal-lg">
+<div class="container" id="mainContainer">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Couch Potato</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <h2>Mood</h2>
-                        <form>
-                            <div class="form-group mood-group-container">
-                                <!--<div class="radio">-->
-                                <!--<label><input type="radio" name="optradio">-->
-                                <!--<img src="images/happyEmoji.png"></label>-->
-                                <!--</div>-->
-                            </div>
-                        </form>
+    <div id="google-icon"><img src="images/googleMaps.png"></div>
+    <div id="pug" class="tada"><img src="images/click-me-arrow.png" id="clickme"><img src="images/pug.png"></div>
+    <div id="dratini-glass"><img src="images/dratini_glass.png"></div>
+    <div class='popup'>
+        <p class="bubble">Hi there! I'm the Couch Pugtato! Let's kick back and relax.<br>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#settingsModal">Get Started</button>
+        </p>
+    </div>
+
+    <div id="modalContainer" id="modal1">
+        <div id="myModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">greetings humans!</h4>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <div class="modal-body">
+                        <p>Feeling burnt out?</p>
+                        <p>Sweet, you've come to the right place, hehe.</p>
+                        <p>Click on Mr. Pugtato Head to get started.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="container modal2" id="mood-container">
+        <!-- Modal -->
+        <div class="modal fade" id="settingsModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Couch Potato</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container emoji-container">
+                            <h2 class="mood-header">Pick a mood:</h2>
+                            <form>
+                                <div class="form-group mood-group-container col-md-12">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default submitBtn" data-dismiss="modal" data-toggle="modal" data-target="#mediaModal">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mediaContainer" class="modal3">
+        <div id="mediaModal" class="modal fade">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">What to Watch</h4>
+                    </div>
+                    <div class="modal-body mediaModalBody">
+                        <div class="yt-player-container hidden_vid">
+                            <div id="yt-player"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container modal5" id="drink-container">
+        <!-- Modal -->
+        <div class="modal fade" id="drinkModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Here's Your Drink</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container thumbnail" id="drinkModalInfoDiv">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="yt-player-container">-->
+        <!--<div id="yt-player"></div>-->
+    <!--</div>-->
+    <!--TODO: Leave this <iframe> here for now-->
+    <!--<iframe id="ytplayer" type="text/html" width="640" height="360"-->
+            <!--src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"-->
+            <!--frameborder="0">-->
+    <!--</iframe>-->
 </div>
-<iframe id="ytplayer" type="text/html" width="640" height="360"
-        src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"
-        frameborder="0">
-</iframe>
 </body>
 </html>

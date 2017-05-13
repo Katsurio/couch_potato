@@ -1,23 +1,280 @@
-html {
-    background: url(pugtato.png) no-repeat center center fixed;
+body {
+    background: url(images/pug_potato2.png) no-repeat fixed left bottom;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    position: relative;
+}
+
+@font-face {
+    font-family: happyCamper;
+    src: url(happy-camper-font.ttf);
+}
+
+#google-icon {
+    position: fixed;
+    height: 40px;
+    display: none;
+    transform: rotate(-6deg);
+    left: 30px;
+    top: 100px;
 }
 
 #google-icon > img {
-    position: absolute;
-    height: 10vw;
-    transform: rotate(-6deg);
-    left: 2%;
-    top: 22%;
+    width: 80px;
+}
+
+.modal-body {
+    font-size: 20px;
+    text-align: center;
+    font-family: Helvetica, sans-serif;
+}
+
+#food-modal {
+    max-height: 750px;
+}
+
+#pug {
+    position: fixed;
+    top: 370px;
+    left: 140px;
+    height: 305px;
+}
+
+#pug > img {
+    transform: rotate(-12deg);
+    transition: all 1s;
+    -webkit-transition: all 1s;
+    width: 380px;
+}
+
+#dratini-glass {
+    position: fixed;
+    bottom: 270px;
+    right: 500px;
+}
+
+#dratini-glass > img {
+    width: 55px;
 }
 
 .navbar {
     margin-bottom: 0;
 }
 
+.navbar-brand {
+    font-family: happyCamper, Helvetica, sans-serif;
+    font-size: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.navbar-nav {
+    display: inline-block;
+    float: none;
+}
+.navbar-collapse {
+    text-align: center;
+}
+
+.navbar-btn {
+    width: 100%;
+}
+
+#modalContainer > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-title {
+    font-family: happyCamper, Helvetica, sans-serif;
+    font-size: 4.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-header > p {
+    text-align: center;
+    font-size: 18px;
+}
+
 .radio {
     display: inline;
+}
+
+.hidden {
+    position: absolute;
+    left: -9999px;
+}
+
+.selected {
+    background-color: dodgerblue;
+    width: 11.5%
+}
+
+.mood-group-container {
+    width: 80%;
+}
+.mood-group-container label {
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    width: 12.5%;
+    padding: 0;
+    margin: 0;
+}
+
+.mood-header {
+    text-align: left;
+    font-size: 35px;
+    font-family: happyCamper, Helvetica, sans-serif;
+}
+
+.popup{
+    margin: 0;
+    padding: 0;
+    position:relative;
+    top: 10vh;
+    left: 30vh;
+    background-image: url("images/speech-bubble.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 40vw;
+    width: 40vw;
+
+    transition:all 1s;
+    display: none;
+}
+.popup p {
+    font-family: happyCamper, Helvetica, sans-serif;
+    font-size: 3vw;
+    text-align: center;
+    padding: 10%;
+}
+.popup button {
+    margin: 0 auto;
+    text-align: center;
+    display: inline-block;
+}
+#pug:hover{
+    cursor:pointer;
+}
+
+@keyframes tada {
+    from {transform: scale3d(1, 1, 1);}
+    10%, 20% {transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);}
+    30%, 50%, 70%, 90% {transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);}
+    40%, 60%, 80% {transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);}
+    to {transform: scale3d(1, 1, 1);}
+}
+
+.tada {
+    animation-name: tada;
+    animation-duration: 10s;
+}
+
+#locationInput {
+    display: inline-block;
+    width: 13vw;
+}
+
+#foodModal {
+    font-family: happyCamper, Helvetica, sans-serif;
+}
+
+
+#drinkModalInfoDiv {
+    width: 100%;
+    height: 200px;
+}
+
+/*@media screen and (max-width: 550px) {*/
+/*#pug {*/
+/*width: 40%;*/
+/*}*/
+/*}*/
+
+/*@media only screen and (max-width:500px) {*/
+    /*body {*/
+        /*width: 100%;*/
+        /*background: url('images/mobile-gradient.jpg') no-repeat center center fixed;*/
+        /*-webkit-background-size: cover;*/
+        /*-moz-background-size: cover;*/
+        /*-o-background-size: cover;*/
+        /*background-size: cover;*/
+    /*}*/
+/*}*/
+
+@media only screen and (orientation: landscape) {
+    #mainContainer {
+        font-size: 16px;
+        width: 100vh;
+        height: 100vh;
+    }
+}
+.hidden_vid{
+    display: none;
+}
+
+iframe {
+    height: 100%;
+    width: 100%;
+}
+
+.yt-player-container {
+    height: 60vh
+}
+
+#mediaContainer {
+    width: 80%;
+    height: 80%;
+}
+.titleDiv {
+    font-family: Helvetica, sans-serif;
+    font-size: 1.8em;
+    font-weight: bold;
+    display: inline-block;
+    margin: 5px;
+}
+.dateDiv {
+    display: inline-block;
+    font-size: 1.5em;
+}
+
+.posterDiv{
+    height: 50%;
+    width: 40%;
+    display: inline-block;
+    position: relative;
+    margin: 0 auto;
+}
+.genreDiv {
+    display: block;
+    margin: 2% 0;
+    font-size: 1.5em;
+}
+.descrDiv {
+    display: inline-block;
+    position: relative;
+    width: 50%;
+    font-size: 0.9em;
+    text-align: center;
+    padding: 5% 1%;
+}
+.trailerBtn {
+    position: relative;
+    display: block;
+    margin: 10%;
+}
+
+#pug > #clickme {
+    display: block;
+    width: 25%;
+    transform: rotate(-46deg);
+    padding: 0;
 }
