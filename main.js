@@ -491,12 +491,15 @@ function applyClickHandlers()
     $('#dratini-glass').on('click', function() {
         $('#drinkModal').modal('show');
     });
+    $('#drinkModal').on('hidden.bs.modal', function () {
+        $('#google-icon').addClass('tada');
+    });
     $('#mediaModal').on('hidden.bs.modal', function () {
         mediaDivArr= [];
         mediaIDVideo = "";
         $('.yt-player-container').toggleClass('hidden_vid');
         removeMediaIDVideo();
-        $('#google-icon').addClass('tada');
+        $('#dratini-glass').addClass('tada');
     });
     $('#foodModal').on('hidden.bs.modal', function () {
         $("label").removeClass('selected');
