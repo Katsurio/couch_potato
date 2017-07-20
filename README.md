@@ -8,7 +8,7 @@ and a film with a user's selected mood. The application is the
 brainchild of a four-developer team destined to take the spud 
 industry by storm. 
 
-**[Live Link](http://www.FisherCode.com/apps/ever_hungry)**
+**[Live Link](http://www.FisherCode.com/apps/couch_potato)**
 
 ### Development Team
 - Alex Seung
@@ -39,4 +39,3 @@ industry by storm.
 - See photos and synopsis from films returned.
 - Utilizes JSDOC standards.
 - Get directions to selected restaurant.
-
