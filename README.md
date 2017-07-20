@@ -1,55 +1,42 @@
-# C4.17_hackathon 2
+Couch Potato
+===============
 
-Hackathon project involving the combination of different data sources into an application or game
+### Summary
+>Enabler of sedentary lifestyles and the mood ring of one's life, 
+Couch Potato is designed to pair a food, a drink, 
+and a film with a user's selected mood. The application is the 
+brainchild of a four-developer team destined to take the spud 
+industry by storm. 
 
-### Requirements
-- Combine at least 3 **external** resources via AJAX requests and present their information in an application
-- Must be documented loosely on JSDOC standards
-- Must be issue-managed via meistertask 
-  - share the meistertask with daniel.paschal@learningfuze.com
-  - name your project 4.17 Team [your team number] Hackathon
+**[Live Link](http://www.FisherCode.com/apps/ever_hungry)**
 
+### Development Team
+- Alex Seung
+- Alexandra Kruip
+- John Fisher
+- Ryan Apellanes
+  
+### Key Technologies
+- **CSS3**
+- **HTML5**
+- **JavaScript**
+- **jQuery**
+- **Bootstrap**
+- **AJAX/JSON**
 
-### Judging Criteria
-- **Appeal** : is it visually appealing / well put together
-- **Code Quality** : is the code properly formatted, are variables and functions well defined and documented
-- **Presentation** : How well is it presented during the unveiling session
-- **Task / Issue Management** : How well was the development process documented / controlled.  Were there well-defined issues, milestones, and project management
-- **Innovative / Transformative** : Did the project do something new and exciting?  Was it bold and tried to do things that haven't been done much.  Did it combine the data sources together in a way that was more useful than either source by itself
-- **Ease of Use / Understanding** : Was it easy to use the application / game, or if it was more complex, was the application or game able to provide you with tutorials or instructions that made understanding it a breeze.
+### APIs
+- The Movie Database (TMDB) 
+- Google Geolocation, 
+- Google Maps
+- Google Places
+- YouTube API
+- CocktailDB
 
-
-### Teams
-- Team 1
-  - Insoo 
-  - Paul 
-  - John K
-  - Jammy 
-
-- Team 2
-  - John M
-  - Jack 
-  - Anna 
-  - Johnny 
-
-- Team 3
-  - Adam 
-  - David 
-  - Steven 
-  - Regis 
-
-- Team 4
-  - Timothy 
-  - Jinwoo 
-  - Jason 
-  - Vincent
-
-- Team 5
-  - Alexandra
-  - Seung
-  - Ryan
-  - Jeff
-
-### Deadline: 
-- 1:00PM Friday, May 10, 2017
+### Feature List
+- Get location with Google Geolocation (if enabled)
+- Set location by City, State, or Zip Code
+- Randomize food, drink, and  search based on user input mood.
+- See photos and synopsis from films returned.
+- Utilizes JSDOC standards.
+- Get directions to selected restaurant.
 
